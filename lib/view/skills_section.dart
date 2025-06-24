@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/widgets/neon_gradient_card_demo.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
@@ -27,21 +26,7 @@ class SkillsSection extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           spacing: 16,
           children: [
-            NeonGradientCardDemo(
-              skills: 'Flutter',
-            ),
-            NeonGradientCardDemo(
-              skills: 'Firebase',
-            ),
-            NeonGradientCardDemo(
-              skills: 'REST API',
-            ),
-            NeonGradientCardDemo(
-              skills: 'GitHub',
-            ),
-            NeonGradientCardDemo(
-              skills: 'Provider',
-            ),
+        
           ],
         ),
       ],

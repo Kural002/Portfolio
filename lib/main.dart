@@ -15,7 +15,9 @@ class MyPortfolioApp extends StatelessWidget {
       title: 'Flutter Web Portfolio',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: HomeScreen(),
+      home: HomeScreen(
+        
+      ),
     );
   }
 }

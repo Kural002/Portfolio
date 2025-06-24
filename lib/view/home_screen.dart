@@ -8,7 +8,7 @@ import 'package:portfolio/widgets/header.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  
+
   final aboutKey = GlobalKey();
   final projectsKey = GlobalKey();
   final certificationsKey = GlobalKey();
@@ -16,6 +16,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,11 +32,11 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-              CustomNavBar(
-            // onAboutTap: () => _scrollTo(aboutKey),
-            onProjectsTap: () => _scrollTo(projectsKey),
-            // onCertificationsTap: () => _scrollTo(certificationsKey),
-          ),
+            CustomNavBar(
+              // onAboutTap: () => _scrollTo(aboutKey),
+              onProjectsTap: () => _scrollTo(projectsKey),
+              // onCertificationsTap: () => _scrollTo(certificationsKey),
+            ),
             Center(
               child: SizedBox(
                 height: MediaQuery.of(context).size.height - 120,
@@ -45,15 +48,16 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-              "Projects",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                fontFamily: GoogleFonts.poppins().fontFamily,
-              ),
-            ),
-            const SizedBox(height: 20),
+            // Text(
+            //   "Projects",
+            //   key: projectsKey,
+            //   style: TextStyle(
+            //     fontSize: 24,
+            //     fontWeight: FontWeight.bold,
+            //     fontFamily: GoogleFonts.poppins().fontFamily,
+            //   ),
+            // ),
+            
             Center(
               child: SizedBox(
                 height: MediaQuery.of(context).size.height - 200,
@@ -74,13 +78,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-  void _scrollTo(GlobalKey key) {
-    final context = key.currentContext;
-    if (context != null) {
-      Scrollable.ensureVisible(
-        context,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    }
+
+void _scrollTo(GlobalKey key) {
+  final context = key.currentContext;
+  if (context != null) {
+    Scrollable.ensureVisible(
+      context,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
+}
