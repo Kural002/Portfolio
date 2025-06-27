@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/view/home_screen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyPortfolioApp());
+  runApp(const PortfolioApp());
 }
 
-class MyPortfolioApp extends StatelessWidget {
-  const MyPortfolioApp({super.key});
+class PortfolioApp extends StatelessWidget {
+  const PortfolioApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Web Portfolio',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      home: HomeScreen(
-        
+      title: 'Portfolio',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.black,
+        primaryColor: Colors.pinkAccent,
       ),
+      home: const HomeScreem(),
     );
   }
 }

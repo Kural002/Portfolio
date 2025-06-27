@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 
 class WebsiteConstraints {
-  final String linked = 'https://www.linkedin.com/in/kural02/';
-  final String github = 'https://github.com/Kural002';
-  final String expense_tracker = 'https://github.com/Kural002/Expense-tracker';
-  final String pokedex = 'https://github.com/Kural002/Pokedex';
-  final String weather ='https://github.com/Kural002/weather_application';  
-  final String portfolio = 'https://github.com/Kural002/Portfolio';
-  final String resume = 'https://drive.google.com/file/d/14oGrVO_4RkcpouRESADaac9DWw3TGBe6/view?usp=sharing';
+  static bool isWeb(BuildContext context) {
+    return MediaQuery.of(context).size.width > 600;
+  }
+  
+  static bool isLargeScreen(BuildContext context) {
+    return MediaQuery.of(context).size.width > 1200;
+  }
 }

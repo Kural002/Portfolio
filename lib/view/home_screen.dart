@@ -1,91 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:portfolio/view/about_section.dart';
 import 'package:portfolio/view/certifications_section.dart';
+import 'package:portfolio/view/experience_section.dart';
+import 'package:portfolio/view/footer_section.dart';
+import 'package:portfolio/view/header_section.dart';
 import 'package:portfolio/view/projects_section.dart';
-import 'package:portfolio/widgets/custom_nav_bar.dart';
-import 'package:portfolio/widgets/header.dart';
+import 'package:portfolio/view/skills_section.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-
-  final aboutKey = GlobalKey();
-  final projectsKey = GlobalKey();
-  final certificationsKey = GlobalKey();
-  final achievementsKey = GlobalKey();
+class HomeScreem extends StatelessWidget {
+  const HomeScreem({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth < 768;
+    final sections = const [
+      HeaderSection(),
+      AboutSection(),
+      ExperienceSection(),
+      SkillsSection(),
+      ProjectsSection(),
+      CertificationsSection(),
+      FooterSection(),
+    ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Portfolio',
-          style: GoogleFonts.poppins(),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.black,
+              Color(0xFF1a1a1a),
+            ],
+          ),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            CustomNavBar(
-              // onAboutTap: () => _scrollTo(aboutKey),
-              onProjectsTap: () => _scrollTo(projectsKey),
-              // onCertificationsTap: () => _scrollTo(certificationsKey),
-            ),
-            Center(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height - 120,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1000),
-                    child: const Header(),
-                  ),
-                ),
-              ),
-            ),
-            // Text(
-            //   "Projects",
-            //   key: projectsKey,
-            //   style: TextStyle(
-            //     fontSize: 24,
-            //     fontWeight: FontWeight.bold,
-            //     fontFamily: GoogleFonts.poppins().fontFamily,
-            //   ),
-            // ),
-            
-            Center(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height - 200,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 10000),
-                    child: ProjectsSection(
-                      key: projectsKey,
-                      projects: [],
+        child: SingleChildScrollView(
+          child: AnimationLimiter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
+                sections.length,
+                (index) => AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 600),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: sections[index],
                     ),
                   ),
                 ),
               ),
             ),
-          ],
+          ),
         ),
       ),
-    );
-  }
-}
-
-void _scrollTo(GlobalKey key) {
-  final context = key.currentContext;
-  if (context != null) {
-    Scrollable.ensureVisible(
-      context,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
     );
   }
 }

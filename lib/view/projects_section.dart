@@ -1,150 +1,124 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/model/project_model.dart';
-import 'package:portfolio/utils/website_constraints.dart';
+import 'package:portfolio/utils/app_urls.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ProjectsSection extends StatefulWidget {
-  final List<ProjectModel> projects;
-  final Key? key;
-
-  const ProjectsSection({
-    required this.projects,
-    required this.key,
-  });
-
-  @override
-  State<ProjectsSection> createState() => _ProjectsSectionState();
-}
-
-class _ProjectsSectionState extends State<ProjectsSection> {
-  void _launchURL(String url) async {
-    try {
-      final uri = Uri.parse(url);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(
-          uri,
-          mode: LaunchMode.externalApplication,
-        );
-      } else {
-        debugPrint("❌ Could not launch $url");
-      }
-    } catch (e) {
-      debugPrint("❌ Error launching $url: $e");
-    }
-  }
+class ProjectsSection extends StatelessWidget {
+  const ProjectsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final projects = [
-      {
-        'title': 'Epension Tracker',
-        'url': WebsiteConstraints().expense_tracker,
-        'image': 'assets/expense/expense1.jpg',
-      },
-      {
-        'title': 'Pokedex',
-        'url': WebsiteConstraints().pokedex,
-        'image': 'assets/expense/expense2.jpg',
-      },
-      {
-        'title': 'Portfolio Flutter Website',
-        'url': WebsiteConstraints().pokedex,
-        'image': 'assets/expense/expense3.jpg',
-      },
-      {
-        'title': 'Weather App',
-        'url': WebsiteConstraints().weather,
-        'image': 'assets/expense/expense4.jpg',
-      },
-    ];
+    final isWeb = MediaQuery.of(context).size.width > 600;
+    final crossAxisCount = isWeb ? 4 : 2;
+    final childAspectRatio = isWeb ? 1.1 : 0.9;
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: Text(
-          "Projects",
-          style: TextStyle(fontFamily: 'Poppins'),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.black,
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("Projects",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold)),
+          const SizedBox(height: 24),
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: crossAxisCount,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            childAspectRatio: childAspectRatio,
+            children: [
+              _buildProjectCard(
+                "Expense Tracker",
+                Icons.account_balance_wallet,
+                AppUrls.expenseTracker,
+              ),
+              _buildProjectCard(
+                "Pokedex",
+                Icons.catching_pokemon,
+                AppUrls.pokedex,
+              ),
+              _buildProjectCard(
+                "Portfolio Website",
+                Icons.web,
+                AppUrls.portfolio,
+              ),
+              _buildProjectCard(
+                "Weather App",
+                Icons.cloud,
+                AppUrls.weatherApp,
+              ),
+            ],
+          ),
+          const SizedBox(height: 40),
+          const Divider(color: Colors.white24, height: 1),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 1200),
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 16,
-              runSpacing: 16,
-              children: projects.map((project) {
-                return GestureDetector(
-                  onTap: () => _launchURL(project['url']!),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width < 600
-                        ? double.infinity
-                        : 250,
-                    child: Card(
-                      color: Colors.grey[900],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(16)),
-                            child: Image.asset(
-                              project['image']!, // <- dynamic local image
-                              height: 250,
-                              width: 250,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  Container(
-                                height: 250,
-                                width: 250,
-                                color: Colors.grey[800],
-                                child: const Icon(Icons.broken_image,
-                                    size: 60, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  project['title']!,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 12),
-                                ElevatedButton(
-                                  onPressed: () => _launchURL(project['url']!),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blueAccent,
-                                  ),
-                                  child: const Text("View Project"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+    );
+  }
+
+  Widget _buildProjectCard(String title, IconData icon, String url) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => _launchURL(url),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[900]?.withOpacity(0.7),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.pinkAccent.withOpacity(0.1),
+                blurRadius: 10,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.pinkAccent.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(icon, color: Colors.pinkAccent, size: 28),
+                ),
+                const SizedBox(height: 16),
+                Text(title,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                const Spacer(),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pinkAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                );
-              }).toList(),
+                  onPressed: () => _launchURL(url),
+                  child: const Text("View Project"),
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void _launchURL(String url) async {
+    Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
   }
 }
