@@ -9,7 +9,7 @@ class SkillsSection extends StatelessWidget {
     final isWeb = WebsiteConstraints.isWeb(context);
 
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.symmetric(horizontal: isWeb ? 100 : 24, vertical: isWeb ? 10 : 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,7 +25,7 @@ class SkillsSection extends StatelessWidget {
             crossAxisCount: isWeb ? 4 : 2,
             mainAxisSpacing: isWeb ? 50 : 20,
             crossAxisSpacing: isWeb ? 50 : 20,
-            childAspectRatio: isWeb  ? 2 :  1.2,
+            childAspectRatio: isWeb ? 2 : 1.2,
             children: const [
               SkillItem(
                 icon: Icons.flutter_dash,

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/utils/app_urls.dart';
+import 'package:portfolio/utils/website_constraints.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CertificationsSection extends StatelessWidget {
   const CertificationsSection({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final bool isWeb = WebsiteConstraints.isWeb(context);
+
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.symmetric(
+        horizontal: isWeb ? 100 : 24,
+        vertical: isWeb ? 10 : 10,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

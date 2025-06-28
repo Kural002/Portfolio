@@ -2,50 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/utils/app_urls.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HeaderSection extends StatefulWidget {
+class HeaderSection extends StatelessWidget {
   const HeaderSection({super.key});
-
-  @override
-  State<HeaderSection> createState() => _HeaderSectionState();
-}
-
-class _HeaderSectionState extends State<HeaderSection>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _fadeInImage;
-  late Animation<double> _fadeInText;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    );
-
-    _fadeInImage = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
-      ),
-    );
-
-    _fadeInText = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.4, 1.0, curve: Curves.easeOut),
-      ),
-    );
-
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +12,7 @@ class _HeaderSectionState extends State<HeaderSection>
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: isWeb ? 80 : 60,
-        horizontal: isWeb ? 20 : 24,
+        horizontal: isWeb ? 100 : 24,
       ),
       child: Column(
         children: [
@@ -65,13 +23,13 @@ class _HeaderSectionState extends State<HeaderSection>
               children: [
                 Expanded(child: _buildContent(isWeb)),
                 const SizedBox(width: 40),
-                FadeTransition(opacity: _fadeInImage, child: _buildFlutterImage()),
+                _buildFlutterImage(),
               ],
             )
           else
             Column(
               children: [
-                FadeTransition(opacity: _fadeInImage, child: _buildFlutterImage()),
+                _buildFlutterImage(),
                 const SizedBox(height: 30),
                 _buildContent(isWeb),
               ],
@@ -84,70 +42,59 @@ class _HeaderSectionState extends State<HeaderSection>
   }
 
   Widget _buildContent(bool isWeb) {
-    return AnimatedBuilder(
-      animation: _fadeInText,
-      builder: (context, child) {
-        return Opacity(
-          opacity: _fadeInText.value,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Hi, I'm",
+            style: TextStyle(color: Colors.white70, fontSize: 18)),
+        const SizedBox(height: 8),
+        ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [Colors.pinkAccent, Colors.purpleAccent],
+          ).createShader(bounds),
+          blendMode: BlendMode.srcIn,
+          child: const Text(
+            "KURALARASU B",
+            style: TextStyle(
+                fontSize: 42,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+                color: Colors.white),
+          ),
+        ),
+        const SizedBox(height: 16),
+        RichText(
+          text: const TextSpan(
             children: [
-              const Text("Hi, I'm",
-                  style: TextStyle(color: Colors.white70, fontSize: 18)),
-              const SizedBox(height: 8),
-              ShaderMask(
-                shaderCallback: (bounds) => const LinearGradient(
-                  colors: [Colors.pinkAccent, Colors.purpleAccent],
-                ).createShader(bounds),
-                blendMode: BlendMode.srcIn,
-                child: const Text(
-                  "KURALARASU B",
-                  style: TextStyle(
-                      fontSize: 42,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
-                      color: Colors.white),
-                ),
-              ),
-              const SizedBox(height: 16),
-              RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                        text: "Flutter ",
-                        style: TextStyle(color: Colors.white, fontSize: 24)),
-                    TextSpan(
-                        text: "Developer",
-                        style:
-                            TextStyle(color: Colors.pinkAccent, fontSize: 24)),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                "I specialize in building high-performance mobile apps with beautiful UIs.",
-                style: TextStyle(color: Colors.white60, fontSize: 18),
-                textAlign: TextAlign.start,
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pinkAccent,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                onPressed: () => _launchURL(AppUrls.resume),
-                icon: const Icon(Icons.download, size: 20),
-                label:
-                    const Text("Download CV", style: TextStyle(fontSize: 16)),
-              ),
+              TextSpan(
+                  text: "Flutter ",
+                  style: TextStyle(color: Colors.white, fontSize: 24)),
+              TextSpan(
+                  text: "Developer",
+                  style: TextStyle(color: Colors.pinkAccent, fontSize: 24)),
             ],
           ),
-        );
-      },
+        ),
+        const SizedBox(height: 24),
+        const Text(
+          "I specialize in building high-performance mobile apps with beautiful UIs.",
+          style: TextStyle(color: Colors.white60, fontSize: 18),
+          textAlign: TextAlign.start,
+        ),
+        const SizedBox(height: 32),
+        ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.pinkAccent,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          onPressed: () => _launchURL(AppUrls.resume),
+          icon: const Icon(Icons.download, size: 20),
+          label: const Text("Download CV", style: TextStyle(fontSize: 16)),
+        ),
+      ],
     );
   }
 
@@ -156,7 +103,8 @@ class _HeaderSectionState extends State<HeaderSection>
       width: 200,
       height: 200,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: Colors.pinkAccent.withOpacity(0.5),
           width: 2,
@@ -169,7 +117,8 @@ class _HeaderSectionState extends State<HeaderSection>
           ),
         ],
       ),
-      child: ClipOval(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
         child: Image.asset(
           'assets/images/flutter_developer.png',
           fit: BoxFit.cover,

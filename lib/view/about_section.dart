@@ -9,7 +9,7 @@ class AboutSection extends StatelessWidget {
     final isWeb = WebsiteConstraints.isWeb(context);
 
     return Padding(
-      padding: EdgeInsets.all(isWeb ? 16 : 24),
+      padding: EdgeInsets.all(isWeb ? 100 : 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

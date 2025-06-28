@@ -12,7 +12,10 @@ class ProjectsSection extends StatelessWidget {
     final childAspectRatio = isWeb ? 1.1 : 0.9;
 
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding:  EdgeInsets.symmetric(
+        horizontal:isWeb ? 100 : 16,
+        vertical: isWeb ? 10 : 10,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

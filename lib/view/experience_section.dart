@@ -13,8 +13,8 @@ class ExperienceSection extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: isWeb ? 20 : 24,
-        vertical: 40,
+        horizontal: isWeb ? 100 : 24,
+        vertical: isWeb ? 10 : 10,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

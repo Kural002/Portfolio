@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:portfolio/view/about_section.dart';
 import 'package:portfolio/view/certifications_section.dart';
+import 'package:portfolio/view/education_section.dart';
 import 'package:portfolio/view/experience_section.dart';
 import 'package:portfolio/view/footer_section.dart';
 import 'package:portfolio/view/header_section.dart';
@@ -15,6 +16,7 @@ class HomeScreem extends StatelessWidget {
   Widget build(BuildContext context) {
     final sections = const [
       HeaderSection(),
+      EducationSection(),
       AboutSection(),
       ExperienceSection(),
       SkillsSection(),
