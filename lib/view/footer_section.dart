@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_urls.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
@@ -13,22 +15,31 @@ class FooterSection extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            const Text("\u00a9 2025 Kuralarasu B",
-                style: TextStyle(color: Colors.white54)),
+            Text(
+              "\u00a9 2025 Kuralarasu B",
+              style: TextStyle(
+                color: Colors.white54,
+                fontFamily: GoogleFonts.montserratAlternates().fontFamily,
+              ),
+            ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // IconButton(
-                //   icon: const Icon(Icons.email, color: Colors.white70),
-                //   onPressed: () => _launchURL(AppUrls.email),
-                // ),
                 IconButton(
-                  icon: const Icon(Icons.code, color: Colors.white70),
+                  icon: Icon(
+                    FontAwesomeIcons.github,
+                    color: Colors.white70,
+                    size: 25,
+                  ),
                   onPressed: () => _launchUrl(AppUrls.github),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.link, color: Colors.white70),
+                  icon: Icon(
+                    FontAwesomeIcons.linkedin,
+                    color: Colors.white70,
+                    size: 25,
+                  ),
                   onPressed: () => _launchUrl(AppUrls.linkedIn),
                 ),
               ],

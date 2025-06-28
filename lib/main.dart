@@ -15,7 +15,6 @@ class PortfolioApp extends StatelessWidget {
       title: 'Portfolio',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
-        primaryColor: Colors.pinkAccent,
       ),
       home: const HomeScreem(),
     );

@@ -10,5 +10,5 @@ class AppUrls {
   static const String guvi = 'https://www.guvi.in/share-certificate/s715H5e079Ok33108A';
   static const String udemy = 'https://www.udemy.com/certificate/UC-08bccc41-a324-45dd-aeaa-18698a495ce3/';
   static const String elewayte = 'https://drive.google.com/file/d/1vl17c9RlUK23kM5_ImWzuYPeuIxtaKYP/view?usp=sharing';
-  static const String yellowBoards = 'https://www.linkedin.com/posts/kural02_flutter-internship-mobileappdevelopment-activity-7328844147048480769-dETq?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD9xoMwBGR1z0JDgOEXJXU_tTIO3FsdnhOY';
+  static const String yellowBoards = 'https://drive.google.com/file/d/12_JmySmzdQzUHio5YAm9F006y9HEQNSW/view?usp=sharing';
 }

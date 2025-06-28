@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_urls.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,9 +13,11 @@ class HeaderSection extends StatelessWidget {
     final isWeb = MediaQuery.of(context).size.width > 600;
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: isWeb ? 80 : 60,
-        horizontal: isWeb ? 100 : 24,
+      padding: EdgeInsets.only(
+        left: isWeb ? 100 : 25,
+        right: isWeb ? 100 : 25,
+        top: isWeb ? 100 : 100,
+        bottom: isWeb ? 30 : 25,
       ),
       child: Column(
         children: [
@@ -23,13 +28,13 @@ class HeaderSection extends StatelessWidget {
               children: [
                 Expanded(child: _buildContent(isWeb)),
                 const SizedBox(width: 40),
-                _buildFlutterImage(),
+                _buildFlutterImage(context),
               ],
             )
           else
             Column(
               children: [
-                _buildFlutterImage(),
+                _buildFlutterImage(context),
                 const SizedBox(height: 30),
                 _buildContent(isWeb),
               ],
@@ -49,69 +54,105 @@ class HeaderSection extends StatelessWidget {
             style: TextStyle(color: Colors.white70, fontSize: 18)),
         const SizedBox(height: 8),
         ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [Colors.pinkAccent, Colors.purpleAccent],
+          shaderCallback: (bounds) => LinearGradient(
+            colors: [
+              Colors.blue.withOpacity(0.4),
+              Colors.blue.withOpacity(0.8)
+            ],
           ).createShader(bounds),
-          blendMode: BlendMode.srcIn,
-          child: const Text(
+          child: Text(
             "KURALARASU B",
             style: TextStyle(
-                fontSize: 42,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-                color: Colors.white),
+              fontSize: 42,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+              color: Colors.white,
+              fontFamily: GoogleFonts.montserrat().fontFamily,
+            ),
           ),
         ),
-        const SizedBox(height: 16),
-        RichText(
-          text: const TextSpan(
-            children: [
-              TextSpan(
-                  text: "Flutter ",
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
-              TextSpan(
-                  text: "Developer",
-                  style: TextStyle(color: Colors.pinkAccent, fontSize: 24)),
-            ],
-          ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Icon(
+              FontAwesomeIcons.flutter,
+              size: 24,
+              color: Colors.blue,
+            ),
+            SizedBox(width: 10),
+            ShaderMask(
+              shaderCallback: (bounds) => LinearGradient(
+                colors: [
+                  Colors.blue.withOpacity(0.8),
+                  Colors.white,
+                ],
+              ).createShader(bounds),
+              child: Text(
+                "Flutter Developer",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
+                  color: Colors.white,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 24),
-        const Text(
+        Text(
           "I specialize in building high-performance mobile apps with beautiful UIs.",
-          style: TextStyle(color: Colors.white60, fontSize: 18),
+          style: TextStyle(
+            color: Colors.white60,
+            fontSize: 18,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+          ),
           textAlign: TextAlign.start,
         ),
         const SizedBox(height: 32),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.pinkAccent,
+            backgroundColor: Colors.blue.shade800,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
           ),
           onPressed: () => _launchURL(AppUrls.resume),
-          icon: const Icon(Icons.download, size: 20),
-          label: const Text("Download CV", style: TextStyle(fontSize: 16)),
+          icon: Icon(
+            Icons.download,
+            size: 20,
+            color: Colors.white,
+          ),
+          label: Text(
+            "Download CV",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+            ),
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildFlutterImage() {
+  Widget _buildFlutterImage(BuildContext context) {
+    final isWeb = MediaQuery.of(context).size.width > 600;
+
     return Container(
-      width: 200,
-      height: 200,
+      width: isWeb ? 200 : 200, // Adjust width based on platform
+      height: isWeb ? 250 : 250, // Adjust height based on platform
       decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: Colors.pinkAccent.withOpacity(0.5),
+          color: Colors.blueAccent.withOpacity(0.5),
           width: 2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.pinkAccent.withOpacity(0.2),
+            color: Colors.blueAccent.withOpacity(0.2),
             blurRadius: 20,
             spreadRadius: 5,
           ),
@@ -121,7 +162,8 @@ class HeaderSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         child: Image.asset(
           'assets/images/flutter_developer.png',
-          fit: BoxFit.cover,
+          // 'assets/images/flutter_dev.jpg',
+          fit: BoxFit.cover, // This will properly fill the container
           errorBuilder: (context, error, stackTrace) => Container(
             color: Colors.grey[800],
             alignment: Alignment.center,

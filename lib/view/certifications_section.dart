@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_urls.dart';
 import 'package:portfolio/utils/website_constraints.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,12 +19,16 @@ class CertificationsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Certifications",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold)),
-          const SizedBox(height: 24),
+          Text(
+            "Certifications",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.montserrat().fontFamily,
+            ),
+          ),
+          const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -62,12 +68,25 @@ class CertificationsSection extends StatelessWidget {
         onTap: () => _launchUrl(url),
         child: Row(
           children: [
-            Icon(Icons.verified, color: Colors.pinkAccent),
+            Icon(
+              Icons.verified,
+              color: Colors.blue,
+            ),
             const SizedBox(width: 16),
-            Text(title,
-                style: const TextStyle(color: Colors.white70, fontSize: 16)),
+            Text(
+              title,
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 16,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+              ),
+            ),
             const Spacer(),
-            Icon(Icons.open_in_new, color: Colors.white54, size: 18),
+            Icon(
+              FontAwesomeIcons.link,
+              color: Colors.white54,
+              size: 18,
+            ),
           ],
         ),
       ),

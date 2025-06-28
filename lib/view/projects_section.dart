@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_urls.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,19 +14,22 @@ class ProjectsSection extends StatelessWidget {
     final childAspectRatio = isWeb ? 1.1 : 0.9;
 
     return Padding(
-      padding:  EdgeInsets.symmetric(
-        horizontal:isWeb ? 100 : 16,
+      padding: EdgeInsets.symmetric(
+        horizontal: isWeb ? 100 : 25,
         vertical: isWeb ? 10 : 10,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Projects",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold)),
-          const SizedBox(height: 24),
+          const Text(
+            "Projects",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          // const SizedBox(height: 16),
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -35,7 +40,7 @@ class ProjectsSection extends StatelessWidget {
             children: [
               _buildProjectCard(
                 "Expense Tracker",
-                Icons.account_balance_wallet,
+                FontAwesomeIcons.wallet,
                 AppUrls.expenseTracker,
               ),
               _buildProjectCard(
@@ -69,11 +74,11 @@ class ProjectsSection extends StatelessWidget {
         onTap: () => _launchURL(url),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey[900]?.withOpacity(0.7),
+            color: Colors.grey[900]?.withOpacity(0.5),
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.pinkAccent.withOpacity(0.1),
+                color: Colors.blueAccent.withOpacity(0.1),
                 blurRadius: 10,
                 spreadRadius: 2,
               ),
@@ -87,28 +92,38 @@ class ProjectsSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.pinkAccent.withOpacity(0.2),
+                    color: Colors.blueAccent.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(icon, color: Colors.pinkAccent, size: 28),
+                  child: Icon(icon, color: Colors.blueAccent, size: 28),
                 ),
                 const SizedBox(height: 16),
-                Text(title,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold)),
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.pinkAccent,
+                    backgroundColor: Colors.blueAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   onPressed: () => _launchURL(url),
-                  child: const Text("View Project"),
+                  child: Text(
+                    "View Project",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                    ),
+                  ),
                 ),
               ],
             ),
