@@ -62,13 +62,13 @@ class HeaderSection extends StatelessWidget {
           ).createShader(bounds),
           child: Text(
             "KURALARASU B",
-            style: TextStyle(
-              fontSize: 42,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.2,
+            style: GoogleFonts.montserrat(
               color: Colors.white,
-              fontFamily: GoogleFonts.montserrat().fontFamily,
+              fontSize: 42,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.bold,
             ),
+
           ),
         ),
         const SizedBox(height: 10),

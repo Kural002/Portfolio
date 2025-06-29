@@ -14,7 +14,7 @@ class EducationSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 20,
-        vertical: isWeb ? 2 : 6,
+        vertical: isWeb ? 0 : 6,
       ),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1200),
@@ -26,13 +26,13 @@ class EducationSection extends StatelessWidget {
               children: [
                 Text(
                   'Education',
-                  style: TextStyle(
+                  style: GoogleFonts.montserrat(
+                    color: Colors.white,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    fontFamily: GoogleFonts.montserrat().fontFamily,
                   ),
                 ),
-                const SizedBox(width: 20),
+                // const SizedBox(height: 30),
                 Expanded(
                   child: Divider(
                     color: Colors.blueAccent,
@@ -63,7 +63,7 @@ class EducationSection extends StatelessWidget {
         ),
         _buildDivider(isWeb: isWeb),
         _buildEducationItem(
-          degree: '12th Grade - Science Stream',
+          degree: '12th Grade - Computer Science ',
           institution: 'Srk International School',
           year: '2020 - 2021',
           description: 'Percentage: 81% | CBSE Board',
@@ -189,12 +189,11 @@ class EducationSection extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: isHighlighted
-                    ? Colors.blueAccent.withOpacity(0.9)
-                    : Colors.blueAccent.withOpacity(0.2),
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(15)
-              ),
+                  color: isHighlighted
+                      ? Colors.blueAccent.withOpacity(0.9)
+                      : Colors.blueAccent.withOpacity(0.2),
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(15)),
               child: Icon(
                 icon,
                 color: isHighlighted ? Colors.white : Colors.blueAccent,

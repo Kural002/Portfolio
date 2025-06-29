@@ -19,14 +19,13 @@ class AboutSection extends StatelessWidget {
         children: [
           Text(
             "About Me",
-            style: TextStyle(
+            style: GoogleFonts.montserrat(
               color: Colors.white,
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              fontFamily: GoogleFonts.montserrat().fontFamily,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 30),
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(

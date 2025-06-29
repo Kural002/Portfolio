@@ -21,11 +21,10 @@ class ExperienceSection extends StatelessWidget {
         children: [
           Text(
             'Experience',
-            style: TextStyle(
+            style: GoogleFonts.montserrat(
               color: Colors.white,
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              fontFamily: GoogleFonts.montserrat().fontFamily,
             ),
           ),
           const SizedBox(height: 30),

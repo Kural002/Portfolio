@@ -9,73 +9,78 @@ class SkillsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWeb = WebsiteConstraints.isWeb(context);
+    final width = MediaQuery.of(context).size.width;
 
-    return Padding(
+    return Container(
+      width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 10 : 10,
+        vertical: 40,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Skills",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              fontFamily: GoogleFonts.montserrat().fontFamily,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Skills",
+                style: GoogleFonts.montserrat(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
-          // const SizedBox(height: 5),
+          const SizedBox(height: 30),
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: isWeb ? 4 : 2,
-            mainAxisSpacing: isWeb ? 50 : 20,
-            crossAxisSpacing: isWeb ? 50 : 20,
-            childAspectRatio: isWeb ? 2 : 1.2,
-          
+            mainAxisSpacing: 25,
+            crossAxisSpacing: 25,
+            childAspectRatio: 1,
             children: const [
               SkillItem(
                 icon: FontAwesomeIcons.flutter,
                 name: "Flutter",
-                level: 75,
+                color: Colors.blue,
               ),
               SkillItem(
                 icon: FontAwesomeIcons.dartLang,
                 name: "Dart",
-                level: 75,
+                color: Colors.blueAccent,
               ),
               SkillItem(
                 icon: FontAwesomeIcons.mobile,
                 name: "Mobile Dev",
-                level: 50,
+                color: Colors.lightBlue,
               ),
               SkillItem(
                 icon: Icons.data_array_rounded,
                 name: "Provider",
-                level: 60,
+                color: Colors.cyan,
               ),
               SkillItem(
                 icon: FontAwesomeIcons.database,
                 name: "Firebase",
-                level: 70,
+                color: Colors.amber,
               ),
               SkillItem(
                 icon: Icons.api_rounded,
                 name: "REST APIs",
-                level: 45,
+                color: Colors.green,
               ),
               SkillItem(
                 icon: FontAwesomeIcons.java,
                 name: "Java",
-                level: 40,
+                color: Colors.orange,
               ),
               SkillItem(
                 icon: FontAwesomeIcons.github,
                 name: "Git",
-                level: 70,
+                color: Colors.white,
               ),
             ],
           ),
@@ -90,60 +95,69 @@ class SkillsSection extends StatelessWidget {
 class SkillItem extends StatelessWidget {
   final IconData icon;
   final String name;
-  final int level;
+  final Color color;
 
   const SkillItem({
     super.key,
     required this.icon,
     required this.name,
-    required this.level,
+    required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = WebsiteConstraints.isWeb(context);
-    return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.grey[900]?.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: Colors.blue, size: 40),
-          const SizedBox(height: 16),
-          Text(
-            name,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              fontFamily: GoogleFonts.poppins().fontFamily,
-            ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.grey[900]?.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: Colors.white.withOpacity(0.1),
+            width: 1,
           ),
-          const SizedBox(height: 8),
-          isWeb
-              ? LinearProgressIndicator(
-                  value: level / 100,
-                  backgroundColor: Colors.grey[800],
-                  color: Colors.blueAccent,
-                  minHeight: 8,
-                  borderRadius: BorderRadius.circular(4),
-                )
-              : Expanded(
-                  child: LinearProgressIndicator(
-                    value: level / 100,
-                    backgroundColor: Colors.grey[800],
-                    color: Colors.blueAccent,
-                    minHeight: 8,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
+          boxShadow: [
+            BoxShadow(
+              color: color.withOpacity(0.1),
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color.withOpacity(0.1),
+                border: Border.all(
+                  color: color.withOpacity(0.3),
+                  width: 1.5,
                 ),
-          const SizedBox(height: 8),
-          Text("$level%", style: const TextStyle(color: Colors.white70)),
-        ],
+              ),
+              child: Icon(
+                icon,
+                color: color,
+                size: 30,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              name,
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

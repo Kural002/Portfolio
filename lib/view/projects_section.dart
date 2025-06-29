@@ -21,15 +21,15 @@ class ProjectsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Projects",
-            style: TextStyle(
+            style: GoogleFonts.montserrat(
               color: Colors.white,
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
           ),
-          // const SizedBox(height: 16),
+          const SizedBox(height: 30),
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
