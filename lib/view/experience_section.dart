@@ -39,7 +39,7 @@ class ExperienceSection extends StatelessWidget {
   List<Widget> _buildExperienceItems(bool isWeb) {
     return [
       _buildExperienceCard(
-        company: 'Yellow Boards Pvt Ltd',
+        company: isWeb ? 'Yellow Boards Pvt Ltd' : 'Yellow Boards \n Pvt Ltd' ,
         role: 'Flutter Developer',
         period: 'Jan 2025 - May 2025',
         description:
@@ -49,7 +49,7 @@ class ExperienceSection extends StatelessWidget {
       ),
       const SizedBox(height: 20),
       _buildExperienceCard(
-        company: 'Elewaytech Pvt Ltd',
+        company: 'Elewaytech  Pvt Ltd',
         role: 'Mobile Application Developer',
         period: 'Dec 2023 - Feb 2024',
         description:

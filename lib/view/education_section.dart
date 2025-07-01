@@ -32,7 +32,7 @@ class EducationSection extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                // const SizedBox(height: 30),
+                SizedBox(height: isWeb ? 30 : 10),
                 Expanded(
                   child: Divider(
                     color: Colors.blueAccent,
@@ -70,8 +70,7 @@ class EducationSection extends StatelessWidget {
           icon: Icons.school_rounded,
           isWeb: isWeb,
         ),
- 
-        const SizedBox(height: 30),
+        SizedBox(height: 30),
         const Divider(color: Colors.white24, height: 1),
       ],
     );

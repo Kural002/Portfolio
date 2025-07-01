@@ -29,7 +29,7 @@ class ProjectsSection extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: isWeb ? 30 : 10 ),
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
