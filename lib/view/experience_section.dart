@@ -94,20 +94,12 @@ class ExperienceSection extends StatelessWidget {
                   fontFamily: GoogleFonts.montserrat().fontFamily,
                 ),
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  period,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                  ),
+              Text(
+                period,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
                 ),
               ),
             ],
@@ -131,7 +123,7 @@ class ExperienceSection extends StatelessWidget {
               fontFamily: GoogleFonts.poppins().fontFamily,
             ),
           ),
-          // const SizedBox(height: 16),
+          const SizedBox(height: 16),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton.icon(

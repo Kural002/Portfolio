@@ -70,15 +70,7 @@ class EducationSection extends StatelessWidget {
           icon: Icons.school_rounded,
           isWeb: isWeb,
         ),
-        _buildDivider(isWeb: isWeb),
-        _buildEducationItem(
-          degree: '10th Grade',
-          institution: 'Jawahar Higher Secondary School',
-          year: '2018 - 2019',
-          description: 'Percentage: 56% | CBSE Board',
-          icon: Icons.school_rounded,
-          isWeb: isWeb,
-        ),
+ 
         const SizedBox(height: 30),
         const Divider(color: Colors.white24, height: 1),
       ],
