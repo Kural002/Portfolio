@@ -48,8 +48,8 @@ class CertificationsSection extends StatelessWidget {
                 ),
                 const Divider(color: Colors.white24, height: 30),
                 _buildCertificationItem(
-                  "Mobile Application Development",
-                  AppUrls.elewayte,
+                  "Flutter Bootcamp",
+                  AppUrls.letsUpgrade,
                 ),
               ],
             ),
