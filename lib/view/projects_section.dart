@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_urls.dart';
+import 'package:portfolio/utils/website_constraints.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectsSection extends StatelessWidget {
@@ -9,7 +10,7 @@ class ProjectsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = MediaQuery.of(context).size.width > 600;
+    final isWeb = WebsiteConstraints.isWeb(context);
     final crossAxisCount = isWeb ? 4 : 2;
     final childAspectRatio = isWeb ? 1.1 : 0.9;
 
@@ -29,7 +30,7 @@ class ProjectsSection extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: isWeb ? 30 : 10 ),
+          SizedBox(height: isWeb ? 30 : 10),
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -109,9 +110,10 @@ class ProjectsSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 const Spacer(),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
+                TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.blueAccent,
+                    backgroundColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -120,7 +122,7 @@ class ProjectsSection extends StatelessWidget {
                   child: Text(
                     "View Project",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.blueAccent,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                     ),
                   ),
