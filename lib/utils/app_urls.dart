@@ -6,7 +6,7 @@ class AppUrls {
   static const String pokedex = 'https://github.com/Kural002/Pokedex';
   static const String weatherApp = 'https://github.com/Kural002/weather_application';  
   static const String portfolio = 'https://github.com/Kural002/Portfolio';
-  static const String resume = 'https://drive.google.com/file/d/14EejJWKlI9bBOlg0NhGXk7HsCawUy3nq/view?usp=sharing';
+  static const String resume = 'https://drive.google.com/file/d/1Z5a0jpfGCc1tKE8sEqZc2M70L9tAXvvg/view?usp=sharing';
   static const String guvi = 'https://www.guvi.in/share-certificate/s715H5e079Ok33108A';
   static const String udemy = 'https://www.udemy.com/certificate/UC-08bccc41-a324-45dd-aeaa-18698a495ce3/';
   static const String elewayte = 'https://drive.google.com/file/d/1vl17c9RlUK23kM5_ImWzuYPeuIxtaKYP/view?usp=sharing';

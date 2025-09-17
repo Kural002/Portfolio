@@ -56,7 +56,7 @@ class EducationSection extends StatelessWidget {
           degree: 'B.Tech Computer and Communication Engineering',
           institution: 'Sri Manakula Vinayagar Engineering College',
           year: '2021 - 2025',
-          description: 'CGPA: 6.90/10.0',
+          description: 'CGPA: 6.76/10.0',
           icon: Icons.school_rounded,
           isHighlighted: true,
           isWeb: isWeb,
