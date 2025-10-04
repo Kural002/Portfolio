@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_urls.dart';
 import 'package:portfolio/utils/website_constraints.dart';
@@ -7,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class CertificationsSection extends StatelessWidget {
   const CertificationsSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     final bool isWeb = WebsiteConstraints.isWeb(context);
@@ -14,7 +14,7 @@ class CertificationsSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 24,
-        vertical: isWeb ? 10 : 10,
+        vertical: 40,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,65 +28,102 @@ class CertificationsSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.grey[900]?.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white12),
-            ),
-            child: Column(
-              children: [
-                _buildCertificationItem(
-                  "Flutter & Dart Bootcamp",
-                  AppUrls.udemy,
-                ),
-                const Divider(color: Colors.white24, height: 30),
-                _buildCertificationItem(
-                  "Flutter Developer",
-                  AppUrls.guvi,
-                ),
-                const Divider(color: Colors.white24, height: 30),
-                _buildCertificationItem(
-                  "Flutter Bootcamp",
-                  AppUrls.letsUpgrade,
-                ),
-              ],
-            ),
+          Column(
+            children: [
+              _buildMinimalCertificationItem(
+                "Flutter & Dart Bootcamp",
+                "Udemy",
+                AppUrls.udemy,
+                Icons.verified,
+                Colors.blueAccent,
+              ),
+              const SizedBox(height: 16),
+              _buildMinimalCertificationItem(
+                "Flutter Developer",
+                "GUVI",
+                AppUrls.guvi,
+                Icons.verified,
+                Colors.blueAccent,
+              ),
+              const SizedBox(height: 16),
+              _buildMinimalCertificationItem(
+                "Flutter Bootcamp",
+                "LetsUpgrade",
+                AppUrls.letsUpgrade,
+                Icons.verified,
+                Colors.blueAccent,
+              ),
+            ],
           ),
-          const SizedBox(height: 40),
         ],
       ),
     );
   }
 
-  Widget _buildCertificationItem(String title, String url) {
+  Widget _buildMinimalCertificationItem(
+    String title,
+    String provider,
+    String url,
+    IconData icon,
+    Color color,
+  ) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => _launchUrl(url),
-        child: Row(
-          children: [
-            Icon(
-              Icons.verified,
-              color: Colors.blue,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.grey[900]!.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.1),
             ),
-            const SizedBox(width: 16),
-            Text(
-              title,
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-                fontFamily: GoogleFonts.poppins().fontFamily,
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  icon,
+                  color: color,
+                  size: 20,
+                ),
               ),
-            ),
-            const Spacer(),
-            Icon(
-              FontAwesomeIcons.link,
-              color: Colors.white54,
-              size: 18,
-            ),
-          ],
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      provider,
+                      style: GoogleFonts.poppins(
+                        color: color,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward,
+                color: Colors.white54,
+                size: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );

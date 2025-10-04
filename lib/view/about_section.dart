@@ -12,7 +12,7 @@ class AboutSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 15 : 12,
+        vertical: 40,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,24 +27,101 @@ class AboutSection extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(28),
             decoration: BoxDecoration(
-              color: Colors.grey[900]?.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white12),
-            ),
-            child: Text(
-              "I’m a passionate Flutter developer with hands-on experience building responsive, cross-platform apps.skilled in Firebase, REST APIs, and state management using Provider.\nI turn ideas into clean, user-friendly mobile and web applications with performance in mind.",
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-                height: 1.6,
-                fontFamily: GoogleFonts.poppins().fontFamily,
+              color: Colors.grey[900]!.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.1),
               ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.arrow_right_alt_rounded,
+                      color: Colors.blueAccent,
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        "Passionate Flutter developer crafting responsive, cross-platform applications with focus on performance and user experience.",
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 16,
+                          height: 1.6,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.arrow_right_alt_rounded,
+                      color: Colors.blueAccent,
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        "Expertise in Firebase, REST APIs, and state management using Provider to build scalable and maintainable applications.",
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 16,
+                          height: 1.6,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.arrow_right_alt_rounded,
+                      color: Colors.blueAccent,
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        "Transforming ideas into clean, user-friendly mobile and web solutions with attention to detail and best practices.",
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 16,
+                          height: 1.6,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 40),
-          const Divider(color: Colors.white24, height: 1),
+          Container(
+            height: 1,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.transparent,
+                  Colors.white.withOpacity(0.5),
+                  Colors.transparent,
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

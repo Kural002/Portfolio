@@ -16,11 +16,11 @@ class HomeScreem extends StatelessWidget {
   Widget build(BuildContext context) {
     final sections = const [
       HeaderSection(),
-      EducationSection(),
       AboutSection(),
       ExperienceSection(),
-      SkillsSection(),
       ProjectsSection(),
+      SkillsSection(),
+      EducationSection(),
       CertificationsSection(),
       FooterSection(),
     ];

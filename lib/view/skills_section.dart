@@ -34,50 +34,48 @@ class SkillsSection extends StatelessWidget {
             ],
           ),
           SizedBox(height: isWeb ? 30 : 10),
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: isWeb ? 4 : 2,
-            mainAxisSpacing: 25,
-            crossAxisSpacing: 25,
-            childAspectRatio: 1,
+
+          Wrap(
+            spacing: 16,
+            runSpacing: 16,
+            alignment: WrapAlignment.start,
             children: const [
-              SkillItem(
+              SkillChip(
                 icon: FontAwesomeIcons.flutter,
                 name: "Flutter",
                 color: Colors.blue,
               ),
-              SkillItem(
+              SkillChip(
                 icon: FontAwesomeIcons.dartLang,
                 name: "Dart",
                 color: Colors.blueAccent,
               ),
-              SkillItem(
+              SkillChip(
                 icon: FontAwesomeIcons.mobile,
                 name: "Mobile Dev",
                 color: Colors.lightBlue,
               ),
-              SkillItem(
+              SkillChip(
                 icon: Icons.data_array_rounded,
                 name: "Provider",
                 color: Colors.cyan,
               ),
-              SkillItem(
+              SkillChip(
                 icon: FontAwesomeIcons.database,
                 name: "Firebase",
                 color: Colors.amber,
               ),
-              SkillItem(
+              SkillChip(
                 icon: Icons.api_rounded,
                 name: "REST APIs",
                 color: Colors.green,
               ),
-              SkillItem(
+              SkillChip(
                 icon: FontAwesomeIcons.java,
                 name: "Java",
                 color: Colors.orange,
               ),
-              SkillItem(
+              SkillChip(
                 icon: FontAwesomeIcons.github,
                 name: "Git",
                 color: Colors.white,
@@ -85,19 +83,30 @@ class SkillsSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 40),
-          const Divider(color: Colors.white24, height: 1),
+          Container(
+            height: 1,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.transparent,
+                  Colors.white.withOpacity(0.5),
+                  Colors.transparent,
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
   }
 }
 
-class SkillItem extends StatelessWidget {
+class SkillChip extends StatelessWidget {
   final IconData icon;
   final String name;
   final Color color;
 
-  const SkillItem({
+  const SkillChip({
     super.key,
     required this.icon,
     required this.name,
@@ -108,53 +117,49 @@ class SkillItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: Container(
-        padding: const EdgeInsets.all(20),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
           color: Colors.grey[900]?.withOpacity(0.3),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(25),
           border: Border.all(
-            color: Colors.white.withOpacity(0.1),
-            width: 1,
+            color: color.withOpacity(0.3),
+            width: 1.5,
           ),
           boxShadow: [
             BoxShadow(
               color: color.withOpacity(0.1),
-              blurRadius: 10,
-              spreadRadius: 2,
-              offset: const Offset(0, 3),
+              blurRadius: 8,
+              spreadRadius: 1,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: color.withOpacity(0.1),
-                border: Border.all(
-                  color: color.withOpacity(0.3),
-                  width: 1.5,
-                ),
               ),
               child: Icon(
                 icon,
                 color: color,
-                size: 30,
+                size: 18,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(width: 8),
             Text(
               name,
               style: GoogleFonts.poppins(
                 color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.5,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.3,
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),

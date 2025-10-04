@@ -40,7 +40,18 @@ class HeaderSection extends StatelessWidget {
               ],
             ),
           const SizedBox(height: 32),
-          const Divider(color: Colors.white24, height: 1),
+          Container(
+            height: 1,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.transparent,
+                  Colors.blueAccent.withOpacity(0.5),
+                  Colors.transparent,
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -68,7 +79,6 @@ class HeaderSection extends StatelessWidget {
               letterSpacing: 1.5,
               fontWeight: FontWeight.bold,
             ),
-
           ),
         ),
         const SizedBox(height: 10),

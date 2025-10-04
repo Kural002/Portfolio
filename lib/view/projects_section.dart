@@ -11,13 +11,11 @@ class ProjectsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWeb = WebsiteConstraints.isWeb(context);
-    final crossAxisCount = isWeb ? 4 : 2;
-    final childAspectRatio = isWeb ? 1.1 : 0.9;
 
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 10 : 10,
+        vertical: 40,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,97 +32,164 @@ class ProjectsSection extends StatelessWidget {
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: crossAxisCount,
+            crossAxisCount: isWeb ? 4 : 1,
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
-            childAspectRatio: childAspectRatio,
+            childAspectRatio: isWeb ? 1.6 : 1.4,
             children: [
               _buildProjectCard(
                 "Expense Tracker",
+                "Track expenses with budget management",
                 FontAwesomeIcons.wallet,
                 AppUrls.expenseTracker,
+                ["Flutter", "Firebase", "Provider"],
               ),
               _buildProjectCard(
                 "Pokedex",
+                "Pokemon encyclopedia with search & filters",
                 Icons.catching_pokemon,
                 AppUrls.pokedex,
+                ["Flutter", "REST API", "Provider"],
               ),
               _buildProjectCard(
                 "Portfolio Website",
+                "Responsive portfolio with clean UI",
                 Icons.web,
                 AppUrls.portfolio,
+                ["Flutter", "Web", "Responsive"],
               ),
               _buildProjectCard(
                 "Weather App",
+                "Real-time weather with forecasts",
                 Icons.cloud,
                 AppUrls.weatherApp,
+                ["Flutter", "API", "Geolocation"],
               ),
             ],
           ),
           const SizedBox(height: 40),
-          const Divider(color: Colors.white24, height: 1),
+          Container(
+            height: 1,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.transparent,
+                  Colors.white.withOpacity(0.5),
+                  Colors.transparent,
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
   }
 
-  Widget _buildProjectCard(String title, IconData icon, String url) {
+  Widget _buildProjectCard(
+    String title,
+    String description,
+    IconData icon,
+    String url,
+    List<String> technologies,
+  ) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => _launchURL(url),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey[900]?.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.blueAccent.withOpacity(0.1),
-                blurRadius: 10,
-                spreadRadius: 2,
-              ),
-            ],
+            color: Colors.grey[800]?.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.1),
+            ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.blueAccent.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(8),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        icon,
+                        color: Colors.blueAccent,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  description,
+                  style: GoogleFonts.poppins(
+                    color: Colors.white70,
+                    fontSize: 14,
                   ),
-                  child: Icon(icon, color: Colors.blueAccent, size: 28),
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                  ),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 6,
+                  children: technologies.map((tech) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        tech,
+                        style: GoogleFonts.poppins(
+                          color: Colors.blueAccent,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 ),
-                const SizedBox(height: 8),
                 const Spacer(),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.blueAccent,
-                    backgroundColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () => _launchURL(url),
-                  child: Text(
-                    "View Project",
-                    style: TextStyle(
-                      color: Colors.blueAccent,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                    ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "View Project",
+                        style: GoogleFonts.poppins(
+                          color: Colors.blueAccent,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.blueAccent,
+                        size: 16,
+                      ),
+                    ],
                   ),
                 ),
               ],
