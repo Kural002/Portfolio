@@ -12,7 +12,7 @@ class AboutSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: 40,
+        vertical: isWeb ? 40 : 10,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

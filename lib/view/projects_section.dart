@@ -11,11 +11,31 @@ class ProjectsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWeb = WebsiteConstraints.isWeb(context);
+    final isHorizontal = WebsiteConstraints.isLandscape(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    int crossAxisCount;
+    if (isWeb) {
+      crossAxisCount = 4;
+    } else if (isHorizontal) {
+      crossAxisCount = 2; 
+    } else {
+      crossAxisCount = 1; 
+    }
+
+    double childAspectRatio;
+    if (isWeb) {
+      childAspectRatio = 1.6;
+    } else if (isHorizontal) {
+      childAspectRatio = 1.3; 
+    } else {
+      childAspectRatio = 1.4; 
+    }
 
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: 40,
+        vertical: isWeb ? 40 : 10,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,10 +52,10 @@ class ProjectsSection extends StatelessWidget {
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: isWeb ? 4 : 1,
+            crossAxisCount: crossAxisCount,
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
-            childAspectRatio: isWeb ? 1.6 : 1.4,
+            childAspectRatio: childAspectRatio,
             children: [
               _buildProjectCard(
                 "Expense Tracker",
@@ -92,108 +112,105 @@ class ProjectsSection extends StatelessWidget {
     String url,
     List<String> technologies,
   ) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => _launchURL(url),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[800]?.withOpacity(0.3),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.1),
-            ),
+    return GestureDetector(
+      onTap: () => _launchURL(url),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[800]?.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Colors.white.withOpacity(0.1),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.blueAccent.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(
-                        icon,
-                        color: Colors.blueAccent,
-                        size: 24,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.blueAccent.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      icon,
+                      color: Colors.blueAccent,
+                      size: 24,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                description,
+                style: GoogleFonts.poppins(
+                  color: Colors.white70,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 8,
+                runSpacing: 6,
+                children: technologies.map((tech) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.blueAccent.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      tech,
+                      style: GoogleFonts.poppins(
+                        color: Colors.blueAccent,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
                       ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const Spacer(),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "View Project",
+                      style: GoogleFonts.poppins(
+                        color: Colors.blueAccent,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Colors.blueAccent,
+                      size: 16,
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  description,
-                  style: GoogleFonts.poppins(
-                    color: Colors.white70,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 6,
-                  children: technologies.map((tech) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.blueAccent.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        tech,
-                        style: GoogleFonts.poppins(
-                          color: Colors.blueAccent,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-                const Spacer(),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "View Project",
-                        style: GoogleFonts.poppins(
-                          color: Colors.blueAccent,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Colors.blueAccent,
-                        size: 16,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

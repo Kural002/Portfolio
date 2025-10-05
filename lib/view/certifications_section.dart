@@ -14,7 +14,7 @@ class CertificationsSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 24,
-        vertical: 40,
+        vertical: isWeb ? 40 : 10,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

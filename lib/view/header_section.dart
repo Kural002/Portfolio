@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +15,8 @@ class HeaderSection extends StatelessWidget {
       padding: EdgeInsets.only(
         left: isWeb ? 100 : 25,
         right: isWeb ? 100 : 25,
-        top: isWeb ? 100 : 100,
-        bottom: isWeb ? 30 : 25,
+        top: isWeb ? 100 : 150,
+        bottom: isWeb ? 30 : 20,
       ),
       child: Column(
         children: [
@@ -39,7 +38,7 @@ class HeaderSection extends StatelessWidget {
                 _buildContent(isWeb),
               ],
             ),
-          const SizedBox(height: 32),
+           SizedBox(height: isWeb ? 40 : 50),
           Container(
             height: 1,
             decoration: BoxDecoration(
@@ -152,8 +151,8 @@ class HeaderSection extends StatelessWidget {
     final isWeb = MediaQuery.of(context).size.width > 600;
 
     return Container(
-      width: isWeb ? 200 : 200, // Adjust width based on platform
-      height: isWeb ? 250 : 250, // Adjust height based on platform
+      width: isWeb ? 200 : 200,
+      height: isWeb ? 250 : 250, 
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
@@ -172,8 +171,9 @@ class HeaderSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         child: Image.asset(
           'assets/images/flutter_developer.png',
-          // 'assets/images/flutter_dev.jpg',
-          fit: BoxFit.cover, // This will properly fill the container
+          width: isWeb ? 200 : 100,
+          height: isWeb ? 250 : 150,
+          fit: BoxFit.cover, 
           errorBuilder: (context, error, stackTrace) => Container(
             color: Colors.grey[800],
             alignment: Alignment.center,
