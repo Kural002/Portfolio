@@ -12,7 +12,7 @@ class AboutSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 40 : 10,
+        vertical: isWeb ? 25 : 20,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +109,7 @@ class AboutSection extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 70),
           Container(
             height: 1,
             decoration: BoxDecoration(

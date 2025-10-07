@@ -14,7 +14,7 @@ class ExperienceSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical:  isWeb ? 40 : 10,
+        vertical: isWeb ? 25 : 20,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class ExperienceSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: isWeb ? 40 : 20),
+          const SizedBox(height: 70),
           Container(
             height: 1,
             decoration: BoxDecoration(

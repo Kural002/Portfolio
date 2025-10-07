@@ -18,24 +18,24 @@ class ProjectsSection extends StatelessWidget {
     if (isWeb) {
       crossAxisCount = 4;
     } else if (isHorizontal) {
-      crossAxisCount = 2; 
+      crossAxisCount = 2;
     } else {
-      crossAxisCount = 1; 
+      crossAxisCount = 1;
     }
 
     double childAspectRatio;
     if (isWeb) {
       childAspectRatio = 1.6;
     } else if (isHorizontal) {
-      childAspectRatio = 1.3; 
+      childAspectRatio = 1.3;
     } else {
-      childAspectRatio = 1.4; 
+      childAspectRatio = 1.4;
     }
 
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 40 : 10,
+        vertical: isWeb ? 25 : 20,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class ProjectsSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 70),
           Container(
             height: 1,
             decoration: BoxDecoration(

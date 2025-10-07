@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_urls.dart';
+import 'package:portfolio/utils/meteor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HeaderSection extends StatelessWidget {
@@ -16,7 +17,7 @@ class HeaderSection extends StatelessWidget {
         left: isWeb ? 100 : 25,
         right: isWeb ? 100 : 25,
         top: isWeb ? 100 : 150,
-        bottom: isWeb ? 30 : 20,
+        bottom: isWeb ? 30 : 25,
       ),
       child: Column(
         children: [
@@ -33,12 +34,14 @@ class HeaderSection extends StatelessWidget {
           else
             Column(
               children: [
+                // const MeteorDemo(),
+                const SizedBox(width: 40),
                 _buildFlutterImage(context),
                 const SizedBox(height: 30),
                 _buildContent(isWeb),
               ],
             ),
-           SizedBox(height: isWeb ? 40 : 50),
+          SizedBox(height: isWeb ? 40 : 50),
           Container(
             height: 1,
             decoration: BoxDecoration(
@@ -88,7 +91,7 @@ class HeaderSection extends StatelessWidget {
               size: 24,
               color: Colors.blue,
             ),
-            SizedBox(width: 10),
+            SizedBox(height: isWeb ? 40 : 30),
             ShaderMask(
               shaderCallback: (bounds) => LinearGradient(
                 colors: [
@@ -152,7 +155,7 @@ class HeaderSection extends StatelessWidget {
 
     return Container(
       width: isWeb ? 200 : 200,
-      height: isWeb ? 250 : 250, 
+      height: isWeb ? 250 : 250,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
@@ -173,7 +176,7 @@ class HeaderSection extends StatelessWidget {
           'assets/images/flutter_developer.png',
           width: isWeb ? 200 : 100,
           height: isWeb ? 250 : 150,
-          fit: BoxFit.cover, 
+          fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) => Container(
             color: Colors.grey[800],
             alignment: Alignment.center,

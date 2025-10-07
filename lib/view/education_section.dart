@@ -13,7 +13,7 @@ class EducationSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 40 : 10,
+        vertical: isWeb ? 25 : 20,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +28,7 @@ class EducationSection extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           _buildEducationTimeline(isWeb: isWeb),
-          const SizedBox(height: 40),
+          const SizedBox(height: 70),
           Container(
             height: 1,
             decoration: BoxDecoration(
@@ -40,7 +40,7 @@ class EducationSection extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -87,7 +87,6 @@ class EducationSection extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Timeline dot
           Container(
             width: 16,
             height: 16,
@@ -97,8 +96,6 @@ class EducationSection extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 20),
-
-          // Content
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

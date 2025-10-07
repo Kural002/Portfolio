@@ -14,7 +14,7 @@ class CertificationsSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 24,
-        vertical: isWeb ? 40 : 10,
+        vertical: isWeb ? 25 : 20,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,6 +54,19 @@ class CertificationsSection extends StatelessWidget {
                 Colors.blueAccent,
               ),
             ],
+          ),
+          const SizedBox(height: 70),
+          Container(
+            height: 1,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.transparent,
+                  Colors.white.withOpacity(0.5),
+                  Colors.transparent,
+                ],
+              ),
+            ),
           ),
         ],
       ),

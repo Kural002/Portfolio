@@ -15,7 +15,7 @@ class SkillsSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 40 : 10,
+        vertical: isWeb ? 25 : 20,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +34,6 @@ class SkillsSection extends StatelessWidget {
             ],
           ),
           SizedBox(height: isWeb ? 30 : 10),
-
           Wrap(
             spacing: 16,
             runSpacing: 16,
@@ -82,7 +81,7 @@ class SkillsSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 70),
           Container(
             height: 1,
             decoration: BoxDecoration(
