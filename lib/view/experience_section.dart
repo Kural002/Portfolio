@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:portfolio/utils/app_colors.dart';
 import 'package:portfolio/utils/app_urls.dart';
+import 'package:portfolio/utils/theme_provider.dart';
 import 'package:portfolio/utils/website_constraints.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart'; 
 
 class ExperienceSection extends StatelessWidget {
   const ExperienceSection({super.key});
@@ -10,6 +13,8 @@ class ExperienceSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWeb = WebsiteConstraints.isWeb(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -22,7 +27,7 @@ class ExperienceSection extends StatelessWidget {
           Text(
             'Experience',
             style: GoogleFonts.montserrat(
-              color: Colors.white,
+              color: isDarkMode ? AppColors.darkText : AppColors.lightText,
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
@@ -31,6 +36,7 @@ class ExperienceSection extends StatelessWidget {
           Column(
             children: [
               _buildExperienceItem(
+                context: context,
                 company: 'Yellow Boards Pvt Ltd',
                 role: 'Flutter Developer',
                 period: 'Jan 2025 - May 2025',
@@ -41,6 +47,7 @@ class ExperienceSection extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               _buildExperienceItem(
+                context: context,
                 company: 'Elewaytech Pvt Ltd',
                 role: 'Mobile Application Developer',
                 period: 'Dec 2023 - Feb 2024',
@@ -58,7 +65,8 @@ class ExperienceSection extends StatelessWidget {
               gradient: LinearGradient(
                 colors: [
                   Colors.transparent,
-                  Colors.white.withOpacity(0.5),
+                  (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                      .withOpacity(0.5),
                   Colors.transparent,
                 ],
               ),
@@ -70,6 +78,7 @@ class ExperienceSection extends StatelessWidget {
   }
 
   Widget _buildExperienceItem({
+    required BuildContext context,
     required String company,
     required String role,
     required String period,
@@ -77,15 +86,26 @@ class ExperienceSection extends StatelessWidget {
     required String certificateUrl,
     required bool isCurrent,
   }) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+
     return Container(
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
-        color: Colors.grey[900]!.withOpacity(0.3),
+        color: isDarkMode ? AppColors.darkCard : AppColors.lightCard,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withOpacity(0.1),
+          color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
+              .withOpacity(0.1),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isDarkMode ? 0.3 : 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +136,9 @@ class ExperienceSection extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: isDarkMode
+                            ? AppColors.darkText
+                            : AppColors.lightText,
                       ),
                     ),
                     Text(
@@ -134,14 +156,17 @@ class ExperienceSection extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
+                  color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                      .withOpacity(0.05),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   period,
                   style: GoogleFonts.poppins(
                     fontSize: 12,
-                    color: Colors.white70,
+                    color:
+                        (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                            .withOpacity(0.7),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -153,7 +178,8 @@ class ExperienceSection extends StatelessWidget {
             description,
             style: GoogleFonts.poppins(
               fontSize: 14,
-              color: Colors.white70,
+              color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                  .withOpacity(0.7),
               height: 1.6,
             ),
           ),

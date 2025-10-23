@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_urls.dart';
-import 'package:portfolio/utils/meteor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HeaderSection extends StatelessWidget {
-  const HeaderSection({super.key});
+  final Function scrollToSection;
+  
+  const HeaderSection({super.key, required this.scrollToSection});
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +17,35 @@ class HeaderSection extends StatelessWidget {
       padding: EdgeInsets.only(
         left: isWeb ? 100 : 25,
         right: isWeb ? 100 : 25,
-        top: isWeb ? 100 : 150,
+        top: isWeb ? 80 : 50, 
         bottom: isWeb ? 30 : 25,
       ),
       child: Column(
         children: [
+      
+            Align(
+              alignment: Alignment.topLeft,
+              child: Builder(
+                builder: (context) => IconButton(
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                  icon: Icon(
+                    Icons.menu,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                    size: 26,
+                  ),
+                ),
+              ),
+            ),
+          
+ 
+          const SizedBox(height: 20),
+          
           if (isWeb)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(child: _buildContent(isWeb)),
+                Expanded(child: _buildContent(isWeb, context)),
                 const SizedBox(width: 40),
                 _buildFlutterImage(context),
               ],
@@ -34,13 +53,12 @@ class HeaderSection extends StatelessWidget {
           else
             Column(
               children: [
-                // const MeteorDemo(),
-                const SizedBox(width: 40),
                 _buildFlutterImage(context),
                 const SizedBox(height: 30),
-                _buildContent(isWeb),
+                _buildContent(isWeb, context),
               ],
             ),
+              
           SizedBox(height: isWeb ? 40 : 50),
           Container(
             height: 1,
@@ -53,18 +71,20 @@ class HeaderSection extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildContent(bool isWeb) {
+  Widget _buildContent(bool isWeb, BuildContext context) {
+    final textColor = Theme.of(context).textTheme.bodyMedium?.color;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Hi, I'm",
-            style: TextStyle(color: Colors.white70, fontSize: 18)),
+        Text("Hi, I'm",
+            style: TextStyle(color: textColor?.withOpacity(0.7), fontSize: 18)),
         const SizedBox(height: 8),
         ShaderMask(
           shaderCallback: (bounds) => LinearGradient(
@@ -76,7 +96,7 @@ class HeaderSection extends StatelessWidget {
           child: Text(
             "KURALARASU B",
             style: GoogleFonts.montserrat(
-              color: Colors.white,
+              color: textColor,
               fontSize: 42,
               letterSpacing: 1.5,
               fontWeight: FontWeight.bold,
@@ -86,28 +106,15 @@ class HeaderSection extends StatelessWidget {
         const SizedBox(height: 10),
         Row(
           children: [
-            Icon(
-              FontAwesomeIcons.flutter,
-              size: 24,
-              color: Colors.blue,
-            ),
-            SizedBox(height: isWeb ? 40 : 30),
-            ShaderMask(
-              shaderCallback: (bounds) => LinearGradient(
-                colors: [
-                  Colors.blue.withOpacity(0.8),
-                  Colors.white,
-                ],
-              ).createShader(bounds),
-              child: Text(
-                "Flutter Developer",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                  color: Colors.white,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                ),
+            const Icon(FontAwesomeIcons.flutter, size: 24, color: Colors.blue),
+            const SizedBox(width: 10),
+            Text(
+              "Flutter Developer",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+                color: textColor,
               ),
             ),
           ],
@@ -116,11 +123,9 @@ class HeaderSection extends StatelessWidget {
         Text(
           "I specialize in building high-performance mobile apps with beautiful UIs.",
           style: TextStyle(
-            color: Colors.white60,
+            color: textColor?.withOpacity(0.7),
             fontSize: 18,
-            fontFamily: GoogleFonts.poppins().fontFamily,
           ),
-          textAlign: TextAlign.start,
         ),
         const SizedBox(height: 32),
         ElevatedButton.icon(
@@ -132,17 +137,12 @@ class HeaderSection extends StatelessWidget {
             ),
           ),
           onPressed: () => _launchURL(AppUrls.resume),
-          icon: Icon(
-            Icons.download,
-            size: 20,
-            color: Colors.white,
-          ),
-          label: Text(
+          icon: const Icon(Icons.download, size: 20, color: Colors.white),
+          label: const Text(
             "Download CV",
             style: TextStyle(
               fontSize: 16,
               color: Colors.white,
-              fontFamily: GoogleFonts.poppins().fontFamily,
             ),
           ),
         ),
@@ -152,7 +152,6 @@ class HeaderSection extends StatelessWidget {
 
   Widget _buildFlutterImage(BuildContext context) {
     final isWeb = MediaQuery.of(context).size.width > 600;
-
     return Container(
       width: isWeb ? 200 : 200,
       height: isWeb ? 250 : 250,
@@ -174,8 +173,6 @@ class HeaderSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         child: Image.asset(
           'assets/images/flutter_developer.png',
-          width: isWeb ? 200 : 100,
-          height: isWeb ? 250 : 150,
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) => Container(
             color: Colors.grey[800],

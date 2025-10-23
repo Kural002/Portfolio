@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:portfolio/utils/app_colors.dart';
+import 'package:portfolio/utils/theme_provider.dart';
 import 'package:portfolio/utils/website_constraints.dart';
+import 'package:provider/provider.dart'; // Add this import
 
 class EducationSection extends StatelessWidget {
   const EducationSection({super.key});
@@ -8,6 +11,8 @@ class EducationSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWeb = WebsiteConstraints.isWeb(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
 
     return Container(
       width: double.infinity,
@@ -21,13 +26,13 @@ class EducationSection extends StatelessWidget {
           Text(
             'Education',
             style: GoogleFonts.montserrat(
-              color: Colors.white,
+              color: isDarkMode ? AppColors.darkText : AppColors.lightText,
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 30),
-          _buildEducationTimeline(isWeb: isWeb),
+          _buildEducationTimeline(context, isWeb: isWeb),
           const SizedBox(height: 70),
           Container(
             height: 1,
@@ -35,7 +40,8 @@ class EducationSection extends StatelessWidget {
               gradient: LinearGradient(
                 colors: [
                   Colors.transparent,
-                  Colors.white.withOpacity(0.5),
+                  (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                      .withOpacity(0.5),
                   Colors.transparent,
                 ],
               ),
@@ -46,10 +52,14 @@ class EducationSection extends StatelessWidget {
     );
   }
 
-  Widget _buildEducationTimeline({required bool isWeb}) {
+  Widget _buildEducationTimeline(BuildContext context, {required bool isWeb}) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+
     return Column(
       children: [
         _buildEducationItem(
+          context: context,
           degree: 'B.Tech Computer and Communication Engineering',
           institution: 'Sri Manakula Vinayagar Engineering College',
           year: '2021 - 2025',
@@ -58,6 +68,7 @@ class EducationSection extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         _buildEducationItem(
+          context: context,
           degree: '12th Grade - Computer Science',
           institution: 'Srk International School',
           year: '2020 - 2021',
@@ -69,20 +80,32 @@ class EducationSection extends StatelessWidget {
   }
 
   Widget _buildEducationItem({
+    required BuildContext context,
     required String degree,
     required String institution,
     required String year,
     required String description,
     required bool isHighlighted,
   }) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.grey[900]?.withOpacity(0.3),
+        color: isDarkMode ? AppColors.darkCard : AppColors.lightCard,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withOpacity(0.1),
+          color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
+              .withOpacity(0.1),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isDarkMode ? 0.3 : 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,6 +116,14 @@ class EducationSection extends StatelessWidget {
             decoration: BoxDecoration(
               color: isHighlighted ? Colors.blueAccent : Colors.grey[600],
               shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: (isHighlighted ? Colors.blueAccent : Colors.grey[600]!)
+                      .withOpacity(0.4),
+                  blurRadius: 8,
+                  spreadRadius: 2,
+                ),
+              ],
             ),
           ),
           const SizedBox(width: 20),
@@ -105,7 +136,7 @@ class EducationSection extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: isDarkMode ? AppColors.darkText : AppColors.lightText,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -113,7 +144,8 @@ class EducationSection extends StatelessWidget {
                   institution,
                   style: GoogleFonts.poppins(
                     fontSize: 16,
-                    color: Colors.white70,
+                    color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                        .withOpacity(0.7),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -129,7 +161,8 @@ class EducationSection extends StatelessWidget {
                       year,
                       style: GoogleFonts.poppins(
                         fontSize: 14,
-                        color: Colors.white60,
+                        color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                            .withOpacity(0.6),
                       ),
                     ),
                   ],
@@ -139,8 +172,11 @@ class EducationSection extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: Colors.blueAccent.withOpacity(0.1),
+                    color: Colors.blueAccent.withOpacity(isDarkMode ? 0.15 : 0.08),
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Colors.blueAccent.withOpacity(isDarkMode ? 0.3 : 0.2),
+                    ),
                   ),
                   child: Text(
                     description,

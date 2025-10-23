@@ -12,4 +12,5 @@ class AppUrls {
   static const String elewayte = 'https://drive.google.com/file/d/1vl17c9RlUK23kM5_ImWzuYPeuIxtaKYP/view?usp=sharing';
   static const String yellowBoards = 'https://drive.google.com/file/d/12_JmySmzdQzUHio5YAm9F006y9HEQNSW/view?usp=sharing';
   static const String letsUpgrade = "https://drive.google.com/file/d/1ssFu1l4VKCmU1ozmpkX7ezZzyVab7KGG/view?usp=sharing";
+  static const String weatherAppDeployd  = "https://weather-application-xwhh.onrender.com/";
 }

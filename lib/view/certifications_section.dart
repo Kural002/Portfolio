@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:portfolio/utils/app_colors.dart';
 import 'package:portfolio/utils/app_urls.dart';
+import 'package:portfolio/utils/theme_provider.dart';
 import 'package:portfolio/utils/website_constraints.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart'; // Add this import
 
 class CertificationsSection extends StatelessWidget {
   const CertificationsSection({super.key});
@@ -10,6 +13,8 @@ class CertificationsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isWeb = WebsiteConstraints.isWeb(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -22,7 +27,7 @@ class CertificationsSection extends StatelessWidget {
           Text(
             "Certifications",
             style: GoogleFonts.montserrat(
-              color: Colors.white,
+              color: isDarkMode ? AppColors.darkText : AppColors.lightText,
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
@@ -31,6 +36,7 @@ class CertificationsSection extends StatelessWidget {
           Column(
             children: [
               _buildMinimalCertificationItem(
+                context,
                 "Flutter & Dart Bootcamp",
                 "Udemy",
                 AppUrls.udemy,
@@ -39,6 +45,7 @@ class CertificationsSection extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               _buildMinimalCertificationItem(
+                context,
                 "Flutter Developer",
                 "GUVI",
                 AppUrls.guvi,
@@ -47,6 +54,7 @@ class CertificationsSection extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               _buildMinimalCertificationItem(
+                context,
                 "Flutter Bootcamp",
                 "LetsUpgrade",
                 AppUrls.letsUpgrade,
@@ -62,7 +70,8 @@ class CertificationsSection extends StatelessWidget {
               gradient: LinearGradient(
                 colors: [
                   Colors.transparent,
-                  Colors.white.withOpacity(0.5),
+                  (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                      .withOpacity(0.5),
                   Colors.transparent,
                 ],
               ),
@@ -74,12 +83,16 @@ class CertificationsSection extends StatelessWidget {
   }
 
   Widget _buildMinimalCertificationItem(
+    BuildContext context,
     String title,
     String provider,
     String url,
     IconData icon,
     Color color,
   ) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -87,19 +100,31 @@ class CertificationsSection extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.grey[900]!.withOpacity(0.2),
+            color: isDarkMode ? AppColors.darkCard : AppColors.lightCard,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                  .withOpacity(0.1),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(isDarkMode ? 0.2 : 0.05),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Row(
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withOpacity(isDarkMode ? 0.15 : 0.08),
                   shape: BoxShape.circle,
+                  border: Border.all(
+                    color: color.withOpacity(isDarkMode ? 0.3 : 0.2),
+                    width: 1,
+                  ),
                 ),
                 child: Icon(
                   icon,
@@ -115,7 +140,9 @@ class CertificationsSection extends StatelessWidget {
                     Text(
                       title,
                       style: GoogleFonts.poppins(
-                        color: Colors.white,
+                        color: isDarkMode
+                            ? AppColors.darkText
+                            : AppColors.lightText,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -125,15 +152,25 @@ class CertificationsSection extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         color: color,
                         fontSize: 14,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ],
                 ),
               ),
-              Icon(
-                Icons.arrow_forward,
-                color: Colors.white54,
-                size: 20,
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                      .withOpacity(0.05),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.arrow_forward,
+                  color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                      .withOpacity(0.6),
+                  size: 18,
+                ),
               ),
             ],
           ),

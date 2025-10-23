@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:portfolio/utils/app_colors.dart';
+import 'package:portfolio/utils/theme_provider.dart';
 import 'package:portfolio/utils/website_constraints.dart';
+import 'package:provider/provider.dart'; 
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
@@ -10,6 +13,8 @@ class SkillsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isWeb = WebsiteConstraints.isWeb(context);
     final width = MediaQuery.of(context).size.width;
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
 
     return Container(
       width: double.infinity,
@@ -26,7 +31,7 @@ class SkillsSection extends StatelessWidget {
               Text(
                 "Skills",
                 style: GoogleFonts.montserrat(
-                  color: Colors.white,
+                  color: isDarkMode ? AppColors.darkText : AppColors.lightText,
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
@@ -70,14 +75,19 @@ class SkillsSection extends StatelessWidget {
                 color: Colors.green,
               ),
               SkillChip(
+                icon: FontAwesomeIcons.database,
+                name: "SQL",
+                color: Colors.orange,
+              ),
+              SkillChip(
                 icon: FontAwesomeIcons.java,
                 name: "Java",
-                color: Colors.orange,
+                color: Colors.red,
               ),
               SkillChip(
                 icon: FontAwesomeIcons.github,
                 name: "Git",
-                color: Colors.white,
+                color: Colors.grey,
               ),
             ],
           ),
@@ -88,7 +98,8 @@ class SkillsSection extends StatelessWidget {
               gradient: LinearGradient(
                 colors: [
                   Colors.transparent,
-                  Colors.white.withOpacity(0.5),
+                  (isDarkMode ? AppColors.darkText : AppColors.lightText)
+                      .withOpacity(0.5),
                   Colors.transparent,
                 ],
               ),
@@ -114,24 +125,32 @@ class SkillChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
-          color: Colors.grey[900]?.withOpacity(0.3),
+          color: isDarkMode ? AppColors.darkCard : AppColors.lightCard,
           borderRadius: BorderRadius.circular(25),
           border: Border.all(
-            color: color.withOpacity(0.3),
+            color: color.withOpacity(isDarkMode ? 0.4 : 0.3),
             width: 1.5,
           ),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.1),
+              color: color.withOpacity(isDarkMode ? 0.15 : 0.08),
               blurRadius: 8,
               spreadRadius: 1,
               offset: const Offset(0, 2),
+            ),
+            BoxShadow(
+              color: Colors.black.withOpacity(isDarkMode ? 0.2 : 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -142,7 +161,7 @@ class SkillChip extends StatelessWidget {
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: color.withOpacity(0.1),
+                color: color.withOpacity(isDarkMode ? 0.15 : 0.08),
               ),
               child: Icon(
                 icon,
@@ -154,7 +173,7 @@ class SkillChip extends StatelessWidget {
             Text(
               name,
               style: GoogleFonts.poppins(
-                color: Colors.white,
+                color: isDarkMode ? AppColors.darkText : AppColors.lightText,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.3,
