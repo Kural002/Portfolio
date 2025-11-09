@@ -107,16 +107,27 @@ class GlassyDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 scrollToSection(certificationsKey);
               }),
-              const Divider(color: Colors.white30),
+              Divider(
+                color: themeProvider.isDarkMode
+                    ? Colors.white.withOpacity(0.3)
+                    : Colors.black.withOpacity(0.2),
+              ),
               _buildDrawerItem(
                   context, Icons.cloud_outlined, "Live Weather App", () async {
-                final Uri url = Uri.parse(AppUrls.weatherAppDeployd);
+                final Uri url = Uri.parse(AppUrls.weatherAppDeployed);
                 if (await canLaunchUrl(url)) {
                   await launchUrl(url, mode: LaunchMode.externalApplication);
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Could not open the link")),
-                  );
+                  await launchUrl(url, mode: LaunchMode.inAppWebView);
+                }
+              }),
+              _buildDrawerItem(context, FontAwesomeIcons.heart, "BetterME App",
+                  () async {
+                final Uri url = Uri.parse(AppUrls.BetterMEAPK);
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                } else {
+                  await launchUrl(url, mode: LaunchMode.inAppWebView);
                 }
               }),
               _buildDrawerItem(
@@ -178,7 +189,11 @@ class GlassyDrawer extends StatelessWidget {
               //   //   );
               //   // }
               // }),
-              const Divider(color: Colors.white30),
+              Divider(
+                color: themeProvider.isDarkMode
+                    ? Colors.white.withOpacity(0.3)
+                    : Colors.black.withOpacity(0.2),
+              ),
               _buildThemeToggle(context),
             ],
           ),
@@ -189,8 +204,13 @@ class GlassyDrawer extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return DrawerHeader(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.transparent,
+        border: Border(
+          bottom: BorderSide(
+              color: themeProvider.isDarkMode ? Colors.white30 : Colors.black26,
+              width: 1),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

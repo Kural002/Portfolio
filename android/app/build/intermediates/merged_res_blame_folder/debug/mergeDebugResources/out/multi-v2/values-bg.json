@@ -1,0 +1,60 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.portfolio.app-mergeDebugResources-30:/values-bg/values-bg.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Kaccie\\.gradle\\caches\\transforms-4\\ce5330c3c24c4b4c041a657fb12d404c\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-bg\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "133",
+                        "endOffsets": "328"
+                    },
+                    "to": {
+                        "startLines": "9",
+                        "startColumns": "4",
+                        "startOffsets": "796",
+                        "endColumns": "137",
+                        "endOffsets": "929"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Kaccie\\.gradle\\caches\\transforms-4\\bdb8ba7239fcd53cc43d7f0690d9f39f\\transformed\\browser-1.8.0\\res\\values-bg\\values-bg.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,166,274,386",
+                        "endColumns": "110,107,111,109",
+                        "endOffsets": "161,269,381,491"
+                    },
+                    "to": {
+                        "startLines": "10,11,12,13",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "934,1045,1153,1265",
+                        "endColumns": "110,107,111,109",
+                        "endOffsets": "1040,1148,1260,1370"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Kaccie\\.gradle\\caches\\transforms-4\\b5968bbc75cbf13dcc1e709dded91a44\\transformed\\core-1.13.1\\res\\values-bg\\values-bg.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,152,262,364,465,572,677,796",
+                        "endColumns": "96,109,101,100,106,104,118,100",
+                        "endOffsets": "147,257,359,460,567,672,791,892"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,14",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,152,262,364,465,572,677,1375",
+                        "endColumns": "96,109,101,100,106,104,118,100",
+                        "endOffsets": "147,257,359,460,567,672,791,1471"
+                    }
+                }
+            ]
+        }
+    ]
+}

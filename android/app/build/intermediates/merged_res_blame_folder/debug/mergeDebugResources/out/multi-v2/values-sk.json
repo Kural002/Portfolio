@@ -1,0 +1,60 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.portfolio.app-mergeDebugResources-30:/values-sk/values-sk.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Kaccie\\.gradle\\caches\\transforms-4\\ce5330c3c24c4b4c041a657fb12d404c\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-sk\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "134",
+                        "endOffsets": "329"
+                    },
+                    "to": {
+                        "startLines": "9",
+                        "startColumns": "4",
+                        "startOffsets": "792",
+                        "endColumns": "138",
+                        "endOffsets": "926"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Kaccie\\.gradle\\caches\\transforms-4\\b5968bbc75cbf13dcc1e709dded91a44\\transformed\\core-1.13.1\\res\\values-sk\\values-sk.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,151,253,354,452,562,670,792",
+                        "endColumns": "95,101,100,97,109,107,121,100",
+                        "endOffsets": "146,248,349,447,557,665,787,888"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,14",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,151,253,354,452,562,670,1358",
+                        "endColumns": "95,101,100,97,109,107,121,100",
+                        "endOffsets": "146,248,349,447,557,665,787,1454"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Kaccie\\.gradle\\caches\\transforms-4\\bdb8ba7239fcd53cc43d7f0690d9f39f\\transformed\\browser-1.8.0\\res\\values-sk\\values-sk.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,162,265,380",
+                        "endColumns": "106,102,114,101",
+                        "endOffsets": "157,260,375,477"
+                    },
+                    "to": {
+                        "startLines": "10,11,12,13",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "931,1038,1141,1256",
+                        "endColumns": "106,102,114,101",
+                        "endOffsets": "1033,1136,1251,1353"
+                    }
+                }
+            ]
+        }
+    ]
+}

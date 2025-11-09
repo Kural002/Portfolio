@@ -1,0 +1,60 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.portfolio.app-mergeDebugResources-30:/values-zh-rTW/values-zh-rTW.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Kaccie\\.gradle\\caches\\transforms-4\\b5968bbc75cbf13dcc1e709dded91a44\\transformed\\core-1.13.1\\res\\values-zh-rTW\\values-zh-rTW.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,147,246,340,434,527,620,716",
+                        "endColumns": "91,98,93,93,92,92,95,100",
+                        "endOffsets": "142,241,335,429,522,615,711,812"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,14",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,147,246,340,434,527,620,1189",
+                        "endColumns": "91,98,93,93,92,92,95,100",
+                        "endOffsets": "142,241,335,429,522,615,711,1285"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Kaccie\\.gradle\\caches\\transforms-4\\bdb8ba7239fcd53cc43d7f0690d9f39f\\transformed\\browser-1.8.0\\res\\values-zh-rTW\\values-zh-rTW.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,139,231,332",
+                        "endColumns": "83,91,100,92",
+                        "endOffsets": "134,226,327,420"
+                    },
+                    "to": {
+                        "startLines": "10,11,12,13",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "819,903,995,1096",
+                        "endColumns": "83,91,100,92",
+                        "endOffsets": "898,990,1091,1184"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Kaccie\\.gradle\\caches\\transforms-4\\ce5330c3c24c4b4c041a657fb12d404c\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-zh-rTW\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "199",
+                        "endColumns": "98",
+                        "endOffsets": "297"
+                    },
+                    "to": {
+                        "startLines": "9",
+                        "startColumns": "4",
+                        "startOffsets": "716",
+                        "endColumns": "102",
+                        "endOffsets": "814"
+                    }
+                }
+            ]
+        }
+    ]
+}

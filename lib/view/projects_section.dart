@@ -6,7 +6,7 @@ import 'package:portfolio/utils/app_urls.dart';
 import 'package:portfolio/utils/theme_provider.dart';
 import 'package:portfolio/utils/website_constraints.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:provider/provider.dart'; 
+import 'package:provider/provider.dart';
 
 class ProjectsSection extends StatelessWidget {
   const ProjectsSection({super.key});
@@ -21,7 +21,7 @@ class ProjectsSection extends StatelessWidget {
 
     int crossAxisCount;
     if (isWeb) {
-      crossAxisCount = 4;
+      crossAxisCount = 5;
     } else if (isHorizontal) {
       crossAxisCount = 2;
     } else {
@@ -30,7 +30,7 @@ class ProjectsSection extends StatelessWidget {
 
     double childAspectRatio;
     if (isWeb) {
-      childAspectRatio = 1.6;
+      childAspectRatio = 0.9;
     } else if (isHorizontal) {
       childAspectRatio = 1.3;
     } else {
@@ -39,8 +39,8 @@ class ProjectsSection extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 25 : 20,
+        horizontal: isWeb ? 80 : 25,
+        vertical: isWeb ? 40 : 20,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +49,7 @@ class ProjectsSection extends StatelessWidget {
             "Projects",
             style: GoogleFonts.montserrat(
               color: isDarkMode ? AppColors.darkText : AppColors.lightText,
-              fontSize: 28,
+              fontSize: 32,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -58,8 +58,8 @@ class ProjectsSection extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: crossAxisCount,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
             childAspectRatio: childAspectRatio,
             children: [
               _buildProjectCard(
@@ -92,6 +92,14 @@ class ProjectsSection extends StatelessWidget {
                 "Real-time weather with forecasts",
                 Icons.cloud,
                 AppUrls.weatherApp,
+                ["Flutter", "API", "Geolocation"],
+              ),
+              _buildProjectCard(
+                context,
+                "BetterMe App",
+                "Personalized fitness and wellness app",
+                FontAwesomeIcons.heart,
+                AppUrls.betterMeApp,
                 ["Flutter", "API", "Geolocation"],
               ),
             ],
@@ -147,59 +155,70 @@ class ProjectsSection extends StatelessWidget {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.blueAccent.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
                         icon,
                         color: Colors.blueAccent,
-                        size: 24,
+                        size: 20,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         title,
                         style: GoogleFonts.poppins(
-                          color: isDarkMode ? AppColors.darkText : AppColors.lightText,
-                          fontSize: 18,
+                          color: isDarkMode
+                              ? AppColors.darkText
+                              : AppColors.lightText,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  description,
-                  style: GoogleFonts.poppins(
-                    color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
-                        .withOpacity(0.7),
-                    fontSize: 14,
+                const SizedBox(height: 8),
+                Expanded(
+                  child: Text(
+                    description,
+                    style: GoogleFonts.poppins(
+                      color: (isDarkMode
+                              ? AppColors.darkText
+                              : AppColors.lightText)
+                          .withOpacity(0.7),
+                      fontSize: 12,
+                      height: 1.4,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 5),
                 Wrap(
-                  spacing: 8,
-                  runSpacing: 6,
+                  spacing: 6,
+                  runSpacing: 4,
                   children: technologies.map((tech) {
                     return Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
+                        horizontal: 8,
+                        vertical: 3,
                       ),
                       decoration: BoxDecoration(
                         color: Colors.blueAccent.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(6),
                         border: Border.all(
                           color: Colors.blueAccent.withOpacity(0.2),
                         ),
@@ -208,44 +227,46 @@ class ProjectsSection extends StatelessWidget {
                         tech,
                         style: GoogleFonts.poppins(
                           color: Colors.blueAccent,
-                          fontSize: 11,
+                          fontSize: 10,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     );
                   }).toList(),
                 ),
-                const Spacer(),
+                const SizedBox(height: 12),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
+                      horizontal: 10,
+                      vertical: 5,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.blueAccent.withOpacity(isDarkMode ? 0.15 : 0.08),
-                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.blueAccent
+                          .withOpacity(isDarkMode ? 0.15 : 0.08),
+                      borderRadius: BorderRadius.circular(6),
                       border: Border.all(
-                        color: Colors.blueAccent.withOpacity(isDarkMode ? 0.4 : 0.3),
+                        color: Colors.blueAccent
+                            .withOpacity(isDarkMode ? 0.4 : 0.3),
                       ),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "View Project",
+                          "View",
                           style: GoogleFonts.poppins(
                             color: Colors.blueAccent,
-                            fontSize: 12,
+                            fontSize: 10, // Smaller font
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: 4),
                         Icon(
                           Icons.arrow_forward,
                           color: Colors.blueAccent,
-                          size: 14,
+                          size: 12, // Smaller icon
                         ),
                       ],
                     ),
