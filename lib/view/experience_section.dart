@@ -2,229 +2,232 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_colors.dart';
 import 'package:portfolio/utils/app_urls.dart';
-import 'package:portfolio/utils/theme_provider.dart';
-import 'package:portfolio/utils/website_constraints.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:provider/provider.dart'; 
 
 class ExperienceSection extends StatelessWidget {
   const ExperienceSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = WebsiteConstraints.isWeb(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDarkMode = themeProvider.isDarkMode;
+    final width = MediaQuery.of(context).size.width;
+    final isWeb = width > 900;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 25 : 20,
+        vertical: 80,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Experience',
-            style: GoogleFonts.montserrat(
-              color: isDarkMode ? AppColors.darkText : AppColors.lightText,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 40),
-          Column(
-            children: [
-              _buildExperienceItem(
-                context: context,
-                company: 'Yellow Boards Pvt Ltd',
-                role: 'Flutter Developer',
-                period: 'Jan 2025 - May 2025',
-                description:
-                    'Developed and maintained cross-platform mobile applications using Flutter. Collaborated with UI/UX designers to implement pixel-perfect interfaces.',
-                certificateUrl: AppUrls.yellowBoards,
-                isCurrent: true,
-              ),
-              const SizedBox(height: 24),
-              _buildExperienceItem(
-                context: context,
-                company: 'Elewaytech Pvt Ltd',
-                role: 'Mobile Application Developer',
-                period: 'Dec 2023 - Feb 2024',
-                description:
-                    'Worked on bug fixes and performance improvements for existing applications. Participated in code reviews and team meetings.',
-                certificateUrl: AppUrls.elewayte,
-                isCurrent: true,
-              ),
-            ],
-          ),
-          const SizedBox(height: 70),
-          Container(
-            height: 1,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.transparent,
-                  (isDarkMode ? AppColors.darkText : AppColors.lightText)
-                      .withOpacity(0.5),
-                  Colors.transparent,
-                ],
-              ),
-            ),
-          )
+          _buildSectionHeader(isDark),
+          const SizedBox(height: 50),
+          _ExperienceTimeline(isDark: isDark),
         ],
       ),
     );
   }
 
-  Widget _buildExperienceItem({
-    required BuildContext context,
-    required String company,
-    required String role,
-    required String period,
-    required String description,
-    required String certificateUrl,
-    required bool isCurrent,
-  }) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDarkMode = themeProvider.isDarkMode;
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.only(bottom: 20),
-      decoration: BoxDecoration(
-        color: isDarkMode ? AppColors.darkCard : AppColors.lightCard,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
-              .withOpacity(0.1),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(isDarkMode ? 0.3 : 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+  Widget _buildSectionHeader(bool isDark) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "JOURNEY",
+          style: GoogleFonts.poppins(
+            color: AppColors.primary,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 2,
           ),
-        ],
-      ),
-      child: Column(
+        ),
+        const SizedBox(height: 8),
+        Text(
+          "Experience",
+          style: GoogleFonts.montserrat(
+            color: isDark ? AppColors.darkText : AppColors.lightText,
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          width: 80,
+          height: 4,
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ExperienceTimeline extends StatelessWidget {
+  final bool isDark;
+
+  const _ExperienceTimeline({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    final experiences = [
+      {
+        "company": "Yellow Boards Pvt Ltd",
+        "role": "Flutter Developer Intern",
+        "period": "Nov 2024 - May 2025",
+        "desc": "Built and maintained cross-platform mobile applications using Flutter. Focused on developing responsive UIs and integrating core features for startup products.",
+        "cert": AppUrls.yellowBoards,
+        "isCurrent": true,
+      },
+      {
+        "company": "Elewaytech Pvt Ltd",
+        "role": "Mobile Application Intern",
+        "period": "Dec 2023 - Feb 2024",
+        "desc": "Assisted in mobile app development, focusing on bug fixes and performance optimization. Contributed to agile team environments and code reviews.",
+        "cert": AppUrls.elewayte,
+        "isCurrent": false,
+      },
+    ];
+
+    return Column(
+      children: experiences.map((exp) {
+        return _ExperienceCard(
+          company: exp["company"] as String,
+          role: exp["role"] as String,
+          period: exp["period"] as String,
+          description: exp["desc"] as String,
+          certUrl: exp["cert"] as String,
+          isDark: isDark,
+          isCurrent: exp["isCurrent"] as bool,
+        );
+      }).toList(),
+    );
+  }
+}
+
+class _ExperienceCard extends StatelessWidget {
+  final String company;
+  final String role;
+  final String period;
+  final String description;
+  final String certUrl;
+  final bool isDark;
+  final bool isCurrent;
+
+  const _ExperienceCard({
+    required this.company,
+    required this.role,
+    required this.period,
+    required this.description,
+    required this.certUrl,
+    required this.isDark,
+    required this.isCurrent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 30),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          // Dot and Line
+          Column(
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                width: 16,
+                height: 16,
                 decoration: BoxDecoration(
-                  color: isCurrent
-                      ? Colors.blueAccent.withOpacity(0.1)
-                      : Colors.greenAccent.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  Icons.work_history_rounded,
-                  color: isCurrent ? Colors.blueAccent : Colors.greenAccent,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      company,
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: isDarkMode
-                            ? AppColors.darkText
-                            : AppColors.lightText,
-                      ),
-                    ),
-                    Text(
-                      role,
-                      style: GoogleFonts.poppins(
-                        fontSize: 15,
-                        color:
-                            isCurrent ? Colors.blueAccent : Colors.greenAccent,
-                      ),
-                    ),
-                  ],
+                  color: isCurrent ? AppColors.primary : (isDark ? Colors.white24 : Colors.black12),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: AppColors.primary.withOpacity(isCurrent ? 0.3 : 0),
+                    width: 4,
+                  ),
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
-                      .withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  period,
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    color:
-                        (isDarkMode ? AppColors.darkText : AppColors.lightText)
-                            .withOpacity(0.7),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                width: 2,
+                height: 150,
+                color: isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.1),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          Text(
-            description,
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
-                  .withOpacity(0.7),
-              height: 1.6,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Align(
-            alignment: Alignment.centerRight,
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () => _launchCertificateUrl(certificateUrl),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.blueAccent.withOpacity(0.2),
-                        Colors.blueAccent.withOpacity(0.1),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: Colors.blueAccent.withOpacity(0.3),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
+          const SizedBox(width: 24),
+          // Content Card
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.darkCard : AppColors.lightCard,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: isCurrent 
+                      ? AppColors.primary.withOpacity(0.2) 
+                      : (isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.05)),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(
-                        Icons.verified_rounded,
-                        color: Colors.blueAccent,
-                        size: 14,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              role,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: isDark ? AppColors.darkText : AppColors.lightText,
+                              ),
+                            ),
+                            Text(
+                              company,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(width: 6),
-                      Text(
-                        'Certificate',
-                        style: GoogleFonts.poppins(
-                          color: Colors.blueAccent,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: (isCurrent ? AppColors.primary : (isDark ? Colors.white : Colors.black)).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          period,
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: isCurrent ? AppColors.primary : (isDark ? AppColors.darkTextDim : AppColors.lightTextDim),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  Text(
+                    description,
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      height: 1.6,
+                      color: isDark ? AppColors.darkTextDim : AppColors.lightTextDim,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  _buildCertButton(context),
+                ],
               ),
             ),
           ),
@@ -233,7 +236,36 @@ class ExperienceSection extends StatelessWidget {
     );
   }
 
-  Future<void> _launchCertificateUrl(String url) async {
+  Widget _buildCertButton(BuildContext context) {
+    return InkWell(
+      onTap: () => _launchURL(certUrl),
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: (isDark ? Colors.white : Colors.black).withOpacity(0.05),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.verified_outlined, size: 16, color: AppColors.primary),
+            const SizedBox(width: 8),
+            Text(
+              "View Certificate",
+              style: GoogleFonts.poppins(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: isDark ? AppColors.darkText : AppColors.lightText,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _launchURL(String url) async {
     Uri uri = Uri.parse(url);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       throw 'Could not launch $url';

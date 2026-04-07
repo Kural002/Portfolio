@@ -1,118 +1,156 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_colors.dart';
-import 'package:portfolio/utils/theme_provider.dart';
-import 'package:portfolio/utils/website_constraints.dart';
-import 'package:provider/provider.dart'; // Add this import
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = WebsiteConstraints.isWeb(context);
-    final themeProvider =
-        Provider.of<ThemeProvider>(context); // Get theme provider
-    final isDarkMode = themeProvider.isDarkMode;
+    final width = MediaQuery.of(context).size.width;
+    final isWeb = width > 900;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isWeb ? 100 : 25,
-        vertical: isWeb ? 25 : 20,
+        vertical: 80,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "About Me",
-            style: GoogleFonts.montserrat(
-              color: isDarkMode ? AppColors.darkText : AppColors.lightText,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 30),
-          Container(
-            padding: const EdgeInsets.all(28),
-            decoration: BoxDecoration(
-              color: isDarkMode ? AppColors.darkCard : AppColors.lightCard,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: (isDarkMode ? AppColors.darkText : AppColors.lightText)
-                    .withOpacity(0.1),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(isDarkMode ? 0.3 : 0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
+          _buildSectionHeader(isDark),
+          const SizedBox(height: 50),
+          if (isWeb)
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildBulletPoint(
-                  context,
-                  "Passionate Flutter developer crafting responsive, cross-platform applications with focus on performance and user experience.",
-                ),
-                const SizedBox(height: 16),
-                _buildBulletPoint(
-                  context,
-                  "Expertise in Firebase, REST APIs, and state management using Provider to build scalable and maintainable applications.",
-                ),
-                const SizedBox(height: 16),
-                _buildBulletPoint(
-                  context,
-                  "Transforming ideas into clean, user-friendly mobile and web solutions with attention to detail and best practices.",
-                ),
+                Expanded(flex: 3, child: _buildAboutText(isDark)),
+                const SizedBox(width: 60),
+                Expanded(flex: 2, child: _buildStatsGrid(isDark)),
+              ],
+            )
+          else
+            Column(
+              children: [
+                _buildAboutText(isDark),
+                const SizedBox(height: 40),
+                _buildStatsGrid(isDark),
               ],
             ),
-          ),
-          const SizedBox(height: 70),
-          Container(
-            height: 1,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.transparent,
-                  (isDarkMode ? AppColors.darkText : AppColors.lightText)
-                      .withOpacity(0.5),
-                  Colors.transparent,
-                ],
-              ),
-            ),
-          )
         ],
       ),
     );
   }
 
-  Widget _buildBulletPoint(BuildContext context, String text) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDarkMode = themeProvider.isDarkMode;
-
-    return Row(
+  Widget _buildSectionHeader(bool isDark) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          Icons.arrow_right_alt_rounded,
-          color: Colors.blueAccent,
-          size: 24,
+        Text(
+          "INTRODUCTION",
+          style: GoogleFonts.poppins(
+            color: AppColors.primary,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 2,
+          ),
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            text,
-            style: GoogleFonts.poppins(
-              color: isDarkMode ? AppColors.darkText : AppColors.lightText,
-              fontSize: 16,
-              height: 1.6,
-              fontWeight: FontWeight.w400,
-            ),
+        const SizedBox(height: 8),
+        Text(
+          "About Me",
+          style: GoogleFonts.montserrat(
+            color: isDark ? AppColors.darkText : AppColors.lightText,
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          width: 80,
+          height: 4,
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(2),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildAboutText(bool isDark) {
+    final style = GoogleFonts.poppins(
+      fontSize: 18,
+      height: 1.8,
+      color: isDark ? AppColors.darkTextDim : AppColors.lightTextDim,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "I am a focused Flutter Developer with a strong foundation in building cross-platform applications during my internships at various startups. I specialize in transforming product requirements into fluid, high-performance mobile experiences.",
+          style: style,
+        ),
+        const SizedBox(height: 20),
+        Text(
+          "With practical experience in startup environments, I have mastered state management (Provider), Firebase integration, and modern UI/UX principles, ensuring every application I build is scalable and user-centric.",
+          style: style,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStatsGrid(bool isDark) {
+    return GridView.count(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: 2,
+      mainAxisSpacing: 20,
+      crossAxisSpacing: 20,
+      childAspectRatio: 1.2,
+      children: [
+        _buildStatCard("9", "Months Exp", Icons.timeline_rounded, isDark),
+        _buildStatCard("15+", "Projects", Icons.rocket_launch_rounded, isDark),
+        _buildStatCard("10+", "Tools", Icons.build_circle_outlined, isDark),
+        _buildStatCard("5+", "Certs", Icons.verified_user_outlined, isDark),
+      ],
+    );
+  }
+
+  Widget _buildStatCard(String val, String label, IconData icon, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : AppColors.lightCard,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: (isDark ? Colors.white : Colors.black).withOpacity(0.05),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: AppColors.primary, size: 28),
+          const SizedBox(height: 12),
+          Text(
+            val,
+            style: GoogleFonts.montserrat(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: isDark ? AppColors.darkText : AppColors.lightText,
+            ),
+          ),
+          Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              color: isDark ? AppColors.darkTextDim : AppColors.lightTextDim,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

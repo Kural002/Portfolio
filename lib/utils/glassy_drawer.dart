@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:portfolio/utils/app_colors.dart';
 import 'package:portfolio/utils/app_urls.dart';
 import 'package:portfolio/utils/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,171 +32,85 @@ class GlassyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = themeProvider.isDarkMode;
+
     return Drawer(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-      ),
       backgroundColor: Colors.transparent,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: themeProvider.isDarkMode
-                  ? [
-                      Colors.white.withOpacity(0.05),
-                      Colors.white.withOpacity(0.03),
-                      Colors.transparent,
-                    ]
-                  : [
-                      Colors.blueGrey.withOpacity(0.15),
-                      Colors.white.withOpacity(0.1),
-                      Colors.transparent,
-                    ],
-            ),
-            border: Border.all(
-              color: themeProvider.isDarkMode
-                  ? Colors.white.withOpacity(0.3)
-                  : Colors.black.withOpacity(0.2),
-              width: 1.1,
-            ),
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: themeProvider.isDarkMode
-                    ? Colors.white.withOpacity(0.08)
-                    : Colors.black.withOpacity(0.15),
-                blurRadius: 12,
-                offset: const Offset(2, 0),
+            color: (isDark ? Colors.black : Colors.white).withOpacity(0.8),
+            border: Border(
+              right: BorderSide(
+                color: (isDark ? Colors.white : Colors.black).withOpacity(0.1),
               ),
-            ],
+            ),
           ),
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              _buildHeader(context),
-              _buildDrawerItem(context, Icons.person, "About", () {
+              _buildHeader(context, isDark),
+              const SizedBox(height: 20),
+              _buildDrawerItem(context, Icons.person_outline, "About", isDark, () {
                 Navigator.pop(context);
                 scrollToSection(aboutKey);
               }),
-              _buildDrawerItem(context, Icons.work, "Experience", () {
+              _buildDrawerItem(context, Icons.work_outline, "Experience", isDark, () {
                 Navigator.pop(context);
                 scrollToSection(experienceKey);
               }),
-              _buildDrawerItem(context, Icons.code, "Skills", () {
+              _buildDrawerItem(context, Icons.code_rounded, "Skills", isDark, () {
                 Navigator.pop(context);
                 scrollToSection(skillsKey);
               }),
-              _buildDrawerItem(context, Icons.assignment, "Projects", () {
+              _buildDrawerItem(context, Icons.rocket_launch_outlined, "Projects", isDark, () {
                 Navigator.pop(context);
                 scrollToSection(projectsKey);
               }),
-              _buildDrawerItem(context, Icons.school, "Education", () {
+              _buildDrawerItem(context, Icons.school_outlined, "Education", isDark, () {
                 Navigator.pop(context);
                 scrollToSection(educationKey);
               }),
-              _buildDrawerItem(context, Icons.card_membership, "Certifications",
+              _buildDrawerItem(context, Icons.verified_outlined, "Certifications", isDark,
                   () {
                 Navigator.pop(context);
                 scrollToSection(certificationsKey);
               }),
-              Divider(
-                color: themeProvider.isDarkMode
-                    ? Colors.white.withOpacity(0.3)
-                    : Colors.black.withOpacity(0.2),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Divider(color: (isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.1))),
               ),
               _buildDrawerItem(
-                  context, Icons.cloud_outlined, "Live Weather App", () async {
-                final Uri url = Uri.parse(AppUrls.weatherAppDeployed);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url, mode: LaunchMode.externalApplication);
-                } else {
-                  await launchUrl(url, mode: LaunchMode.inAppWebView);
-                }
-              }),
-              _buildDrawerItem(context, FontAwesomeIcons.heart, "BetterME App",
-                  () async {
-                final Uri url = Uri.parse(AppUrls.BetterMEAPK);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url, mode: LaunchMode.externalApplication);
-                } else {
-                  await launchUrl(url, mode: LaunchMode.inAppWebView);
-                }
-              }),
-              _buildDrawerItem(
-                  context, Icons.attach_money, "Expense tracker APK", () async {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Coming Soon'),
-                      content: const Text(
-                          'The APK for this app will be available soon.'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('OK'),
+                  context, Icons.cloud_outlined, "Live Weather App", isDark, () => _launch(AppUrls.weatherAppDeployed)),
+              _buildDrawerItem(context, FontAwesomeIcons.heart, "BetterME App", isDark,
+                  () => _launch(AppUrls.BetterMEAPK)),
+              
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: AppColors.glassDecoration(isDark: isDark),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        isDark ? "Dark Mode" : "Light Mode",
+                        style: GoogleFonts.poppins(
+                          color: isDark ? AppColors.darkText : AppColors.lightText,
+                          fontSize: 14,
                         ),
-                      ],
-                    );
-                  },
-                );
-              }),
-
-              //     () async {
-              //   // final Uri url = Uri.parse();
-              //   // if (await canLaunchUrl(url)) {
-              //   //   await launchUrl(url, mode: LaunchMode.externalApplication);
-              //   // } else {
-              //   //   ScaffoldMessenger.of(context).showSnackBar(
-              //   //     const SnackBar(content: Text("Could not open the link")),
-              //   //   );
-              //   // }
-              // }),
-              _buildDrawerItem(context, Icons.catching_pokemon, "PokeDex APK",
-                  () async {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Coming Soon'),
-                      content: const Text(
-                          'The APK for this app will be available soon.'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }),
-              //     () async {
-              //   // final Uri url = Uri.parse();
-              //   // if (await canLaunchUrl(url)) {
-              //   //   await launchUrl(url, mode: LaunchMode.externalApplication);
-              //   // } else {
-              //   //   ScaffoldMessenger.of(context).showSnackBar(
-              //   //     const SnackBar(content: Text("Could not open the link")),
-              //   //   );
-              //   // }
-              // }),
-              Divider(
-                color: themeProvider.isDarkMode
-                    ? Colors.white.withOpacity(0.3)
-                    : Colors.black.withOpacity(0.2),
+                      ),
+                      Switch(
+                        value: isDark,
+                        onChanged: (value) => themeProvider.toggleTheme(),
+                        activeColor: AppColors.primary,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              _buildThemeToggle(context),
             ],
           ),
         ),
@@ -202,37 +118,40 @@ class GlassyDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return DrawerHeader(
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border(
-          bottom: BorderSide(
-              color: themeProvider.isDarkMode ? Colors.white30 : Colors.black26,
-              width: 1),
-        ),
-      ),
+  void _launch(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Widget _buildHeader(BuildContext context, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.grey[100],
-            child: Icon(FontAwesomeIcons.flutter, size: 40, color: Colors.blue),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Icon(FontAwesomeIcons.flutter, size: 32, color: AppColors.primary),
           ),
-          const SizedBox(height: 10),
-          const Text(
+          const SizedBox(height: 20),
+          Text(
             "KURALARASU B",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
+            style: GoogleFonts.montserrat(
+              color: isDark ? AppColors.darkText : AppColors.lightText,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Text(
+          Text(
             "Flutter Developer",
-            style: TextStyle(
-              color: Colors.white70,
+            style: GoogleFonts.poppins(
+              color: isDark ? AppColors.darkTextDim : AppColors.lightTextDim,
               fontSize: 14,
             ),
           ),
@@ -242,33 +161,19 @@ class GlassyDrawer extends StatelessWidget {
   }
 
   Widget _buildDrawerItem(
-      BuildContext context, IconData icon, String title, VoidCallback onTap) {
+      BuildContext context, IconData icon, String title, bool isDark, VoidCallback onTap) {
     return ListTile(
-      leading: Icon(icon, color: Colors.grey[200]),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+      leading: Icon(icon, color: isDark ? Colors.white70 : Colors.black54, size: 22),
       title: Text(
         title,
-        style: const TextStyle(color: Colors.white, fontSize: 16),
+        style: GoogleFonts.poppins(
+          color: isDark ? Colors.white : Colors.black87,
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+        ),
       ),
       onTap: onTap,
-      hoverColor: Colors.white.withOpacity(0.1),
-    );
-  }
-
-  Widget _buildThemeToggle(BuildContext context) {
-    return ListTile(
-      leading: Icon(
-        themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
-        color: Colors.white,
-      ),
-      title: Text(
-        themeProvider.isDarkMode ? "Light Mode" : "Dark Mode",
-        style: const TextStyle(color: Colors.white),
-      ),
-      trailing: Switch(
-        value: themeProvider.isDarkMode,
-        onChanged: (value) => themeProvider.toggleTheme(),
-        activeColor: Colors.blueAccent,
-      ),
     );
   }
 }
