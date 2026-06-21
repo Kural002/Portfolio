@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_colors.dart';
-import 'package:portfolio/utils/audio_helper.dart';
 import 'package:portfolio/utils/cursor_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -249,7 +248,6 @@ class ProjectCaseStudy extends StatelessWidget {
           onExit: (_) => cursorProvider.setHovering(false),
           child: GestureDetector(
             onTap: () async {
-              AudioHelper.playClick();
               final uri = Uri.parse(url);
               if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
                 throw 'Could not launch $url';
@@ -303,7 +301,6 @@ class ProjectCaseStudy extends StatelessWidget {
           onExit: (_) => cursorProvider.setHovering(false),
           child: GestureDetector(
             onTap: () {
-              AudioHelper.playClick();
               cursorProvider.setHovering(false);
               Navigator.pop(context);
             },

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_colors.dart';
 import 'package:portfolio/utils/theme_provider.dart';
-import 'package:portfolio/utils/audio_helper.dart';
 import 'package:portfolio/utils/cursor_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -109,8 +108,6 @@ class ModernNavigationBar extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _SoundToggle(isDark: isDark),
-                  const SizedBox(width: 12),
                   _buildThemeToggle(themeProvider, isDark),
                 ],
               ),
@@ -166,8 +163,6 @@ class ModernNavigationBar extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _SoundToggle(isDark: isDark),
-                  const SizedBox(width: 8),
                   _buildThemeToggle(themeProvider, isDark),
                   const SizedBox(width: 8),
                   Consumer<CursorProvider>(
@@ -179,7 +174,6 @@ class ModernNavigationBar extends StatelessWidget {
                           constraints: const BoxConstraints(),
                           padding: const EdgeInsets.all(4),
                           onPressed: () {
-                            AudioHelper.playClick();
                             Scaffold.of(context).openDrawer();
                           },
                           icon: Icon(
@@ -254,7 +248,6 @@ class ModernNavigationBar extends StatelessWidget {
           onExit: (_) => cursorProvider.setHovering(false),
           child: GestureDetector(
             onTap: () {
-              AudioHelper.playClick();
               themeProvider.toggleTheme();
             },
             child: AnimatedContainer(
@@ -368,7 +361,6 @@ class _InteractiveNavLinkState extends State<_InteractiveNavLink> {
       },
       child: InkWell(
         onTap: () {
-          AudioHelper.playClick();
           widget.onTap();
         },
         borderRadius: BorderRadius.circular(30),
@@ -441,48 +433,6 @@ class _InteractiveNavLinkState extends State<_InteractiveNavLink> {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SoundToggle extends StatefulWidget {
-  final bool isDark;
-  const _SoundToggle({required this.isDark});
-
-  @override
-  State<_SoundToggle> createState() => _SoundToggleState();
-}
-
-class _SoundToggleState extends State<_SoundToggle> {
-  @override
-  Widget build(BuildContext context) {
-    final cursorProvider = Provider.of<CursorProvider>(context, listen: false);
-    final isSound = AudioHelper.isSoundEnabled;
-
-    return MouseRegion(
-      onEnter: (_) => cursorProvider.setHovering(true),
-      onExit: (_) => cursorProvider.setHovering(false),
-      child: IconButton(
-        padding: EdgeInsets.zero,
-        constraints: const BoxConstraints(),
-        onPressed: () {
-          setState(() {
-            AudioHelper.isSoundEnabled = !AudioHelper.isSoundEnabled;
-          });
-          AudioHelper.playClick();
-        },
-        icon: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          child: Icon(
-            isSound ? Icons.volume_up_rounded : Icons.volume_off_rounded,
-            key: ValueKey<bool>(isSound),
-            color: widget.isDark 
-                ? (isSound ? AppColors.primary : Colors.white30) 
-                : (isSound ? AppColors.primary : Colors.black26),
-            size: 18,
           ),
         ),
       ),

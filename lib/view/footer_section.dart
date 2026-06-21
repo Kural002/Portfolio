@@ -7,7 +7,6 @@ import 'package:portfolio/utils/app_colors.dart';
 import 'package:portfolio/view/components/cyber_panel.dart';
 import 'package:provider/provider.dart';
 import 'package:portfolio/utils/cursor_provider.dart';
-import 'package:portfolio/utils/audio_helper.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
@@ -107,7 +106,6 @@ class _SocialIconState extends State<_SocialIcon> {
           },
           child: GestureDetector(
             onTap: () {
-              AudioHelper.playClick();
               _launchURL(widget.url);
             },
             child: AnimatedContainer(

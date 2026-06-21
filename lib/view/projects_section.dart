@@ -7,7 +7,6 @@ import 'package:portfolio/view/components/cyber_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:portfolio/utils/cursor_provider.dart';
-import 'package:portfolio/utils/audio_helper.dart';
 import 'package:portfolio/view/components/project_case_study.dart';
 
 class ProjectsSection extends StatelessWidget {
@@ -154,7 +153,6 @@ class _ProjectCardState extends State<_ProjectCard> {
           },
           child: GestureDetector(
             onTap: () {
-              AudioHelper.playClick();
               cursorProvider.setHovering(false);
               showModalBottomSheet(
                 context: context,

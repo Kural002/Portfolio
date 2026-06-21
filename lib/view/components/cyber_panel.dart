@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/cursor_provider.dart';
-import '../../utils/audio_helper.dart';
 
 /// A premium, frosted-glass container with soft rounded corners and smooth ambient shadows on hover.
 class CyberPanel extends StatelessWidget {
@@ -121,10 +120,7 @@ class _CyberButtonState extends State<CyberButton> {
             cursorProvider.setHovering(false);
           },
           child: GestureDetector(
-            onTap: () {
-              AudioHelper.playClick();
-              widget.onPressed();
-            },
+            onTap: widget.onPressed,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               curve: Curves.easeOutCubic,
