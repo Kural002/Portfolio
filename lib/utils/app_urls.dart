@@ -6,7 +6,7 @@ class AppUrls {
   static const String pokedex = 'https://github.com/Kural002/Pokedex';
   static const String weatherApp = 'https://github.com/Kural002/weather_application';  
   static const String portfolio = 'https://github.com/Kural002/Portfolio';
-  static const String resume = 'https://drive.google.com/file/d/1Z5a0jpfGCc1tKE8sEqZc2M70L9tAXvvg/view?usp=sharing';
+  static const String resume = 'https://drive.google.com/file/d/1icTSitZm0w9fZ2idpmzmkET0LI9bQqg-/view?usp=sharing';
   static const String guvi = 'https://www.guvi.in/share-certificate/s715H5e079Ok33108A';
   static const String udemy = 'https://www.udemy.com/certificate/UC-08bccc41-a324-45dd-aeaa-18698a495ce3/';
   static const String elewayte = 'https://drive.google.com/file/d/1vl17c9RlUK23kM5_ImWzuYPeuIxtaKYP/view?usp=sharing';
@@ -15,4 +15,6 @@ class AppUrls {
   static const String weatherAppDeployed  = "https://weather-application-xwhh.onrender.com/";
   static const String BetterMEAPK = "https://drive.google.com/file/d/10vW_I7byG_1t5cTiU8LGPerMk8_H-J-3/view?usp=sharing";
   static const String betterMeApp = "https://github.com/Kural002/BetterMe.git";
+  static const String missionInvictus = 'https://drive.google.com/file/d/1kanlD3m7Dzr40YZtikHXb7RH8KQsSTa_/view?usp=sharing';
+  static const String internshala = 'https://drive.google.com/file/d/1xuWXg2nusD1wJBhIw-H_k9PdEGbCr0iE/view?usp=sharing';
 }

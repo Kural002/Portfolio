@@ -4,6 +4,10 @@ import 'package:portfolio/utils/app_urls.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio/utils/app_colors.dart';
+import 'package:portfolio/view/components/cyber_panel.dart';
+import 'package:provider/provider.dart';
+import 'package:portfolio/utils/cursor_provider.dart';
+import 'package:portfolio/utils/audio_helper.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
@@ -17,12 +21,22 @@ class FooterSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 25),
       child: Column(
         children: [
+          // Elegant gradient divider
           Container(
             height: 1,
             width: double.infinity,
-            color: (isDark ? Colors.white : Colors.black).withOpacity(0.05),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.primary.withOpacity(0.0),
+                  AppColors.primary.withOpacity(0.3),
+                  AppColors.primary.withOpacity(0.0),
+                ],
+              ),
+            ),
           ),
           const SizedBox(height: 40),
+          
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -32,20 +46,24 @@ class FooterSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 32),
+          
           Text(
             "Designed & Built by Kuralarasu B",
-            style: GoogleFonts.poppins(
-              color: isDark ? AppColors.darkTextDim : AppColors.lightTextDim,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+            style: GoogleFonts.inter(
+              color: isDark ? AppColors.darkText : AppColors.lightText,
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.5,
             ),
           ),
           const SizedBox(height: 8),
+          
           Text(
-            "\u00a9 2025 All Rights Reserved",
-            style: GoogleFonts.poppins(
-              color: (isDark ? Colors.white : Colors.black).withOpacity(0.3),
-              fontSize: 12,
+            "\u00a9 2026 All Rights Reserved",
+            style: GoogleFonts.spaceMono(
+              color: isDark ? AppColors.darkTextDim : AppColors.lightTextDim,
+              fontSize: 11,
+              letterSpacing: 0.3,
             ),
           ),
         ],
@@ -74,32 +92,43 @@ class _SocialIconState extends State<_SocialIcon> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => isHovered = true),
-      onExit: (_) => setState(() => isHovered = false),
-      child: GestureDetector(
-        onTap: () => _launchURL(widget.url),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: isHovered 
-                ? AppColors.primary.withOpacity(0.1) 
-                : (widget.isDark ? Colors.white : Colors.black).withOpacity(0.05),
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: isHovered 
-                  ? AppColors.primary.withOpacity(0.5) 
-                  : (widget.isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.1)),
+    final strokeColor = widget.isDark ? AppColors.primary : AppColors.primary.withOpacity(0.7);
+
+    return Consumer<CursorProvider>(
+      builder: (context, cursorProvider, child) {
+        return MouseRegion(
+          onEnter: (_) {
+            setState(() => isHovered = true);
+            cursorProvider.setHovering(true);
+          },
+          onExit: (_) {
+            setState(() => isHovered = false);
+            cursorProvider.setHovering(false);
+          },
+          child: GestureDetector(
+            onTap: () {
+              AudioHelper.playClick();
+              _launchURL(widget.url);
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              transform: Matrix4.identity()..scale(isHovered ? 1.1 : 1.0),
+              child: CyberPanel(
+                cutSize: 0,
+                isGlowEnabled: isHovered,
+                borderWidth: isHovered ? 1.5 : 1.0,
+                color: isHovered ? strokeColor : strokeColor.withOpacity(0.3),
+                padding: const EdgeInsets.all(12),
+                child: Icon(
+                  widget.icon,
+                  color: isHovered ? AppColors.primary : (widget.isDark ? Colors.white60 : Colors.black54),
+                  size: 18,
+                ),
+              ),
             ),
           ),
-          child: Icon(
-            widget.icon,
-            color: isHovered ? AppColors.primary : (widget.isDark ? Colors.white60 : Colors.black54),
-            size: 20,
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 

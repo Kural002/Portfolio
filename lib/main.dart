@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:portfolio/utils/app_colors.dart';
+import 'package:portfolio/utils/cursor_provider.dart';
 import 'utils/theme_provider.dart';
 import 'view/home_screen.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => CursorProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -21,10 +26,10 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       themeMode: themeProvider.themeMode,
-      home:  HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

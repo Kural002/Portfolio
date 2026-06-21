@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_colors.dart';
+import 'package:portfolio/view/components/cyber_panel.dart';
 
 class EducationSection extends StatelessWidget {
   const EducationSection({super.key});
@@ -29,37 +30,11 @@ class EducationSection extends StatelessWidget {
   }
 
   Widget _buildSectionHeader(bool isDark) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "ACADEMICS",
-          style: GoogleFonts.poppins(
-            color: AppColors.primary,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 2,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          "Education",
-          style: GoogleFonts.montserrat(
-            color: isDark ? AppColors.darkText : AppColors.lightText,
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Container(
-          width: 80,
-          height: 4,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-      ],
+    return CreativeSectionHeader(
+      number: "05",
+      category: "Academics",
+      title: "Education",
+      isDark: isDark,
     );
   }
 }
@@ -122,109 +97,146 @@ class _EducationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accentColor = isHighlighted ? AppColors.primary : (isDark ? Colors.white30 : Colors.black26);
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 30),
+      margin: const EdgeInsets.only(bottom: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Dot and Line
+          // Elegant dot and connector
           Column(
             children: [
               Container(
-                width: 16,
-                height: 16,
+                width: 18,
+                height: 18,
                 decoration: BoxDecoration(
-                  color: isHighlighted ? AppColors.primary : (isDark ? Colors.white24 : Colors.black12),
                   shape: BoxShape.circle,
+                  color: isHighlighted ? AppColors.primary : Colors.transparent,
                   border: Border.all(
-                    color: AppColors.primary.withOpacity(isHighlighted ? 0.3 : 0),
-                    width: 4,
+                    color: isHighlighted ? AppColors.primary : (isDark ? Colors.white30 : Colors.black26),
+                    width: 2.5,
                   ),
+                  boxShadow: isHighlighted ? [
+                    BoxShadow(
+                      color: AppColors.primary.withOpacity(0.4),
+                      blurRadius: 8,
+                      spreadRadius: 2,
+                    ),
+                  ] : [],
                 ),
+                child: isHighlighted 
+                    ? const Center(
+                        child: Icon(Icons.circle, size: 6, color: Colors.white),
+                      ) 
+                    : null,
               ),
               Container(
-                width: 2,
-                height: 120,
-                color: (isDark ? Colors.white : Colors.black).withOpacity(0.1),
+                width: 1.5,
+                height: 130,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      accentColor,
+                      (isDark ? Colors.white10 : Colors.black12),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
-          const SizedBox(width: 24),
+          const SizedBox(width: 20),
+          
           // Content Card
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: isDark ? AppColors.darkCard : AppColors.lightCard,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: isHighlighted 
-                      ? AppColors.primary.withOpacity(0.2) 
-                      : (isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.05)),
-                ),
-              ),
-              child: Column(
+            child: CyberPanel(
+              cutSize: 0,
+              isGlowEnabled: isHighlighted,
+              color: isHighlighted ? AppColors.primary : (isDark ? Colors.white10 : Colors.black12),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
+                  // Accent bar block
+                  Container(
+                    width: 4,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: isHighlighted ? AppColors.primary : Colors.grey.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              degree,
-                              style: GoogleFonts.montserrat(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: isDark ? AppColors.darkText : AppColors.lightText,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    degree,
+                                    style: GoogleFonts.playfairDisplay(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                      color: isDark ? AppColors.darkText : AppColors.lightText,
+                                      letterSpacing: 0.2,
+                                    ),
+                                  ),
+                                  Text(
+                                    institution,
+                                    style: GoogleFonts.inter(
+                                      fontSize: 13,
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              institution,
-                              style: GoogleFonts.poppins(
-                                fontSize: 15,
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            const SizedBox(width: 10),
+                            CyberStatusBadge(
+                              label: period,
+                              color: isHighlighted ? AppColors.primary : const Color(0xFF64748B),
                             ),
                           ],
                         ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: (isHighlighted ? AppColors.primary : (isDark ? Colors.white : Colors.black)).withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          period,
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: isHighlighted ? AppColors.primary : (isDark ? AppColors.darkTextDim : AppColors.lightTextDim),
+                        const SizedBox(height: 16),
+                        
+                        // Score Panel
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.06),
+                            border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.grade_rounded, size: 14, color: AppColors.primary),
+                              const SizedBox(width: 6),
+                              Text(
+                                result,
+                                style: GoogleFonts.spaceMono(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary,
+                                  letterSpacing: 0.2,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.05),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: AppColors.primary.withOpacity(0.1)),
-                    ),
-                    child: Text(
-                      result,
-                      style: GoogleFonts.poppins(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primary,
-                      ),
+                      ],
                     ),
                   ),
                 ],
@@ -235,4 +247,4 @@ class _EducationCard extends StatelessWidget {
       ),
     );
   }
-}
+}

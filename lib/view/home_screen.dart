@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:portfolio/utils/circular_reveal_clipper.dart';
+import 'package:portfolio/utils/cursor_provider.dart';
+import 'package:portfolio/view/components/custom_cursor.dart';
 import 'package:portfolio/utils/glassy_drawer.dart';
 import 'package:portfolio/view/about_section.dart';
 import 'package:portfolio/view/certifications_section.dart';
@@ -22,9 +25,14 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   double _scrollProgress = 0;
+
+  late AnimationController _revealController;
+  bool _isRevealing = false;
+  bool _revealFromDark = true;
+  bool? _wasDark;
 
   final GlobalKey aboutKey = GlobalKey();
   final GlobalKey experienceKey = GlobalKey();
@@ -37,6 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _revealController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 650),
+    );
     _scrollController.addListener(() {
       if (_scrollController.hasClients) {
         setState(() {
@@ -53,7 +65,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _revealController.dispose();
     super.dispose();
+  }
+
+  void _triggerThemeReveal(bool wasDark, bool isDark) {
+    if (mounted) {
+      setState(() {
+        _revealFromDark = wasDark;
+        _isRevealing = true;
+      });
+      _revealController.forward(from: 0.0).then((_) {
+        if (mounted) {
+          setState(() {
+            _isRevealing = false;
+          });
+        }
+      });
+    }
   }
 
   void _scrollToSection(GlobalKey key) {
@@ -67,8 +96,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isWeb = MediaQuery.of(context).size.width > 900;
     final themeProvider = Provider.of<ThemeProvider>(context);
     final isDark = themeProvider.isDarkMode;
+    final cursorProvider = Provider.of<CursorProvider>(context, listen: false);
+
+    if (_wasDark != null && _wasDark != isDark) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _triggerThemeReveal(_wasDark!, isDark);
+      });
+    }
+    _wasDark = isDark;
 
     final List<Widget> sections = [
       HeaderSection(
@@ -95,9 +133,22 @@ class _HomeScreenState extends State<HomeScreen> {
         educationKey: educationKey,
         certificationsKey: certificationsKey,
       ),
-      body: Stack(
-        children: [
-          // Background Gradient
+      body: MouseRegion(
+        cursor: (isWeb && Provider.of<CursorProvider>(context).showCursor) 
+            ? SystemMouseCursors.none 
+            : MouseCursor.defer,
+        onHover: (event) {
+          if (isWeb) {
+            cursorProvider.updatePosition(event.position);
+          }
+        },
+        onExit: (event) {
+          if (isWeb) {
+            cursorProvider.hideCursor();
+          }
+        },
+        child: Stack(
+          children: [
           AnimatedContainer(
             duration: const Duration(milliseconds: 500),
             decoration: BoxDecoration(
@@ -105,8 +156,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: isDark
-                    ? [AppColors.darkBg, const Color(0xFF141E30)]
-                    : [AppColors.lightBg, const Color(0xFFECE9E6)],
+                    ? [AppColors.darkBg, const Color(0xFF07080F)]
+                    : [AppColors.lightBg, const Color(0xFFEBE6DD)],
               ),
             ),
           ),
@@ -182,8 +233,32 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          // Theme Circular Reveal Wipe Overlay
+          if (_isRevealing)
+          // Theme Circular Reveal Wipe Overlay
+          if (_isRevealing)
+            Positioned.fill(
+              child: AnimatedBuilder(
+                animation: _revealController,
+                builder: (context, child) {
+                  return ClipPath(
+                    clipper: CircularRevealClipper(
+                      fraction: 1.0 - _revealController.value,
+                      center: Offset(MediaQuery.of(context).size.width - 80, 50),
+                    ),
+                    child: Container(
+                      color: _revealFromDark ? AppColors.darkBg : AppColors.lightBg,
+                    ),
+                  );
+                },
+              ),
+            ),
+
+          // Custom cursor overlay layer (only on desktop/web screens)
+          if (isWeb) const CustomCursor(),
         ],
       ),
-    );
+    ),
+  );
   }
 }

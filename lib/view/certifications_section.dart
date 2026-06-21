@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_colors.dart';
 import 'package:portfolio/utils/app_urls.dart';
+import 'package:portfolio/view/components/cyber_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CertificationsSection extends StatelessWidget {
@@ -13,6 +14,29 @@ class CertificationsSection extends StatelessWidget {
     final isWeb = width > 900;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+
+    final certs = [
+      {
+        "title": "Flutter Developer Role Selection",
+        "provider": "Internshala",
+        "url": AppUrls.internshala,
+      },
+      {
+        "title": "Flutter & Dart Bootcamp",
+        "provider": "Udemy",
+        "url": AppUrls.udemy,
+      },
+      {
+        "title": "Flutter Developer",
+        "provider": "GUVI",
+        "url": AppUrls.guvi,
+      },
+      {
+        "title": "Flutter Bootcamp",
+        "provider": "LetsUpgrade",
+        "url": AppUrls.letsUpgrade,
+      },
+    ];
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -27,7 +51,7 @@ class CertificationsSection extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 3,
+            itemCount: certs.length,
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: isWeb ? 400 : 500,
               mainAxisSpacing: 20,
@@ -35,23 +59,6 @@ class CertificationsSection extends StatelessWidget {
               mainAxisExtent: isWeb ? 100 : 90,
             ),
             itemBuilder: (context, index) {
-              final certs = [
-                {
-                  "title": "Flutter & Dart Bootcamp",
-                  "provider": "Udemy",
-                  "url": AppUrls.udemy,
-                },
-                {
-                  "title": "Flutter Developer",
-                  "provider": "GUVI",
-                  "url": AppUrls.guvi,
-                },
-                {
-                  "title": "Flutter Bootcamp",
-                  "provider": "LetsUpgrade",
-                  "url": AppUrls.letsUpgrade,
-                },
-              ];
               final c = certs[index];
               return _CertCard(
                 title: c["title"] as String,
@@ -67,37 +74,11 @@ class CertificationsSection extends StatelessWidget {
   }
 
   Widget _buildSectionHeader(bool isDark) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "CREDENTIALS",
-          style: GoogleFonts.poppins(
-            color: AppColors.primary,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 2,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          "Certifications",
-          style: GoogleFonts.montserrat(
-            color: isDark ? AppColors.darkText : AppColors.lightText,
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Container(
-          width: 80,
-          height: 4,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-      ],
+    return CreativeSectionHeader(
+      number: "06",
+      category: "Credentials",
+      title: "Certifications",
+      isDark: isDark,
     );
   }
 }
@@ -124,78 +105,72 @@ class _CertCardState extends State<_CertCard> {
 
   @override
   Widget build(BuildContext context) {
+    final strokeColor = widget.isDark ? AppColors.primary : AppColors.primary.withOpacity(0.7);
+
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        decoration: BoxDecoration(
-          color: widget.isDark ? AppColors.darkCard : AppColors.lightCard,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isHovered 
-                ? AppColors.primary.withOpacity(0.5) 
-                : (widget.isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.05)),
-            width: 2,
-          ),
-          boxShadow: [
-            if (isHovered)
-              BoxShadow(
-                color: AppColors.primary.withOpacity(0.1),
-                blurRadius: 15,
-                offset: const Offset(0, 8),
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOutCubic,
+        transform: Matrix4.identity()..scale(isHovered ? 1.03 : 1.0),
+        child: CyberPanel(
+          cutSize: 0,
+          isGlowEnabled: isHovered,
+          borderWidth: isHovered ? 1.5 : 1.0,
+          color: isHovered ? strokeColor : strokeColor.withOpacity(0.2),
+          padding: EdgeInsets.zero,
+          child: InkWell(
+            onTap: () => _launchURL(widget.url),
+            borderRadius: BorderRadius.circular(24),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(Icons.verified_rounded, color: AppColors.primary, size: 18),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.title,
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: widget.isDark ? AppColors.darkText : AppColors.lightText,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          widget.provider,
+                          style: GoogleFonts.inter(
+                            fontSize: 11,
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_outward_rounded,
+                    size: 16,
+                    color: isHovered ? AppColors.primary : (widget.isDark ? Colors.white30 : Colors.black26),
+                  ),
+                ],
               ),
-          ],
-        ),
-        child: InkWell(
-          onTap: () => _launchURL(widget.url),
-          borderRadius: BorderRadius.circular(20),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(Icons.verified_rounded, color: AppColors.primary, size: 20),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.title,
-                        style: GoogleFonts.montserrat(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: widget.isDark ? AppColors.darkText : AppColors.lightText,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        widget.provider,
-                        style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Icon(
-                  Icons.arrow_outward_rounded,
-                  size: 16,
-                  color: isHovered ? AppColors.primary : (widget.isDark ? Colors.white24 : Colors.black12),
-                ),
-              ],
             ),
           ),
         ),

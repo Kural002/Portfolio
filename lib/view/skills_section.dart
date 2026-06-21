@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/app_colors.dart';
+import 'package:portfolio/view/components/cyber_panel.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
@@ -29,37 +30,11 @@ class SkillsSection extends StatelessWidget {
   }
 
   Widget _buildSectionHeader(bool isDark) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "ABILITIES",
-          style: GoogleFonts.poppins(
-            color: AppColors.primary,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 2,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          "Technical Skills",
-          style: GoogleFonts.montserrat(
-            color: isDark ? AppColors.darkText : AppColors.lightText,
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Container(
-          width: 80,
-          height: 4,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-      ],
+    return CreativeSectionHeader(
+      number: "04",
+      category: "Abilities",
+      title: "Technical Skills",
+      isDark: isDark,
     );
   }
 
@@ -106,13 +81,14 @@ class SkillsSection extends StatelessWidget {
         children: [
           Text(
             title,
-            style: GoogleFonts.montserrat(
-              fontSize: 20,
+            style: GoogleFonts.playfairDisplay(
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: isDark ? AppColors.darkText : AppColors.lightText,
+              letterSpacing: 0.5,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
           Wrap(
             spacing: 12,
             runSpacing: 12,
@@ -143,38 +119,54 @@ class _InteractiveSkillChipState extends State<_InteractiveSkillChip> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = widget.isDark;
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        transform: Matrix4.identity()..scale(isHovered ? 1.05 : 1.0),
-        decoration: BoxDecoration(
-          color: widget.isDark ? AppColors.darkCard : AppColors.lightCard,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isHovered 
-                ? AppColors.primary.withOpacity(0.5) 
-                : (widget.isDark ? Colors.white : Colors.black).withOpacity(0.05),
-            width: isHovered ? 1.5 : 1,
-          ),
-          boxShadow: [
-            BoxShadow(
+        duration: const Duration(milliseconds: 150),
+        transform: Matrix4.identity()..scale(isHovered ? 1.04 : 1.0),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.darkCard : Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
               color: isHovered 
-                  ? AppColors.primary.withOpacity(0.2) 
-                  : Colors.black.withOpacity(0.02),
-              blurRadius: isHovered ? 12 : 4,
-              offset: Offset(0, isHovered ? 4 : 2),
+                  ? AppColors.primary.withOpacity(0.5) 
+                  : (isDark ? AppColors.primary.withOpacity(0.1) : AppColors.primary.withOpacity(0.22)),
+              width: 1.0,
             ),
-          ],
-        ),
-        child: Text(
-          widget.skill,
-          style: GoogleFonts.poppins(
-            fontSize: 14,
-            fontWeight: isHovered ? FontWeight.w600 : FontWeight.w500,
-            color: isHovered ? AppColors.primary : (widget.isDark ? AppColors.darkText : AppColors.lightText),
+            boxShadow: [
+              BoxShadow(
+                color: isHovered 
+                    ? AppColors.primary.withOpacity(0.12) 
+                    : Colors.black.withOpacity(0.02),
+                blurRadius: isHovered ? 10 : 4,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isHovered ? AppColors.primary : Colors.grey.withOpacity(0.5),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                widget.skill,
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  fontWeight: isHovered ? FontWeight.w700 : FontWeight.w500,
+                  color: isDark ? AppColors.darkText : AppColors.lightText,
+                ),
+              ),
+            ],
           ),
         ),
       ),
